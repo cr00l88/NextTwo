@@ -1,0 +1,182 @@
+import { useReducer } from "react";
+import { Pressable } from "react-native";
+import { RootStackScreenProps } from "../types/rootNavigator";
+import {
+  Block,
+  Text,
+  Button,
+  Input,
+  Icon,
+  Toggle,
+  TitleToggleRow,
+  PrimaryButton,
+} from "../components";
+import { useHabitsContext } from "../hooks/useHabitsContext";
+import {
+  createHabitFormInitialState,
+  createHabitFormReducer,
+  TCreateHabitFormInputType,
+  TCreateHabitFormToggleType,
+} from "../reducers/createHabitFormReducer";
+
+import { useTheme } from "../hooks/useTheme";
+import ModalNavbar from "../components/ModalNavbar";
+
+const POMODORE_OPTIONS = ["15", "30", "60", "120"];
+
+const CreateHabitScreen: React.FC<
+  RootStackScreenProps<"CreateHabitScreen">
+> = ({ navigation }) => {
+  const { onCreateHabit } = useHabitsContext();
+  const { colors, sizes } = useTheme();
+  const [formState, formDispatch] = useReducer(
+    createHabitFormReducer,
+    createHabitFormInitialState
+  );
+
+  const onInputChange = (input: TCreateHabitFormInputType, text: string) => {
+    formDispatch({
+      type: "UPDATE",
+      payload: {
+        key: input,
+        value: text,
+      },
+    });
+  };
+
+  const onToggle = (key: TCreateHabitFormToggleType) => {
+    formDispatch({
+      type: "TOGGLE",
+      payload: {
+        key,
+      },
+    });
+  };
+
+  const onPressPomodoreOption = (option: string) => {
+    formDispatch({
+      type: "UPDATE",
+      payload: {
+        key: "pomodoreTime",
+        value: option,
+      },
+    });
+  };
+
+  const onCreateNewHabit = () => {
+    if (formState.name) {
+      onCreateHabit(formState);
+
+      navigation.goBack();
+    }
+  };
+
+  const isFrameOfPomodoreOptionFocused = (time: string) =>
+    formState.pomodoreTime === time ? colors.black : colors.white;
+
+  const isTextOfPomodoreOptionFocused = (time: string) =>
+    formState.pomodoreTime === time ? colors.white : colors.black;
+
+  const pomodoreOptions = () =>
+    POMODORE_OPTIONS.map((option, i) => (
+      <Button
+        key={i}
+        radius={4}
+        paddingVertical={4}
+        paddingHorizontal={8}
+        border={formState.pomodoreTime !== option}
+        color={isFrameOfPomodoreOptionFocused(option)}
+        onPress={() => onPressPomodoreOption(option)}
+      >
+        <Text color={isTextOfPomodoreOptionFocused(option)}>
+          {option + " min"}
+        </Text>
+      </Button>
+    ));
+
+  return (
+    <Block flex={1} color="white">
+      <ModalNavbar
+        title="Create a new habit"
+        onPressClose={() => navigation.goBack()}
+      />
+
+      <Block padding={sizes.padding}>
+        <Button
+          onPress={() => console.log("Go to choose icon")}
+          style={{
+            alignSelf: "center",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 80,
+            height: 80,
+            borderRadius: 4,
+            borderColor: colors.lightGray,
+            borderWidth: 2,
+          }}
+        >
+          <Icon icon="plus" color={colors.black} />
+          <Text body marginTop={8}>
+            Add icon
+          </Text>
+        </Button>
+
+        <Block marginVertical={sizes.md}>
+          <Text body>Name</Text>
+          <Input
+            value={formState.name}
+            placeholder="Name"
+            border
+            padding={12}
+            marginVertical={4}
+            onChangeText={(text) => onInputChange("name", text)}
+          />
+        </Block>
+        <Block>
+          <Text body>Description</Text>
+          <Input
+            placeholder="Description"
+            border
+            padding={12}
+            marginVertical={4}
+            onChangeText={(text) => onInputChange("desc", text)}
+          />
+        </Block>
+
+        <TitleToggleRow
+          title="Pomodore"
+          initialState={formState.pomodore}
+          onPress={() => onToggle("pomodore")}
+        />
+
+        {formState.pomodore && (
+          <Block row justify="space-between" marginBottom={sizes.s}>
+            {pomodoreOptions()}
+          </Block>
+        )}
+
+        <TitleToggleRow
+          title="Notification"
+          initialState={false}
+          onPress={() => onToggle("notification")}
+        />
+
+        <PrimaryButton
+          title="Create a new project"
+          onPress={onCreateNewHabit}
+        />
+
+        <Pressable
+          onPress={() => console.log(formState)}
+          style={{ backgroundColor: "blue" }}
+        >
+          <Text align="center" color={"white"}>
+            Print data
+          </Text>
+        </Pressable>
+      </Block>
+    </Block>
+  );
+};
+
+export default CreateHabitScreen;
