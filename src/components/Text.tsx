@@ -2,6 +2,8 @@ import React from "react";
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from "react-native";
 import { useTheme } from "../hooks/useTheme";
 
+// type TTextStyleProps = Pick<TextStyle, "color">;
+
 interface ITextProps extends TextStyle {
   children?: React.ReactNode;
   h1?: boolean;

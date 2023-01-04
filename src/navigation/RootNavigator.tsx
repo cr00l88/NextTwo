@@ -7,6 +7,7 @@ import CreateHabitScreen from "../screens/CreateHabitScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import HabitDetailsScreen from "../screens/HabitDetailsScreen";
 import HabitActionSheetModal from "../screens/HabitActionSheetModal";
+import SelectHabitIconModal from "../screens/SelectHabitIconModal";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
@@ -40,6 +41,11 @@ const RootNavigator: React.FC = () => {
             name="HabitDetailsScreen"
             component={HabitDetailsScreen}
             options={{ title: "Habit" }}
+          />
+          <RootStack.Screen
+            name="SelectHabitIconModal"
+            component={SelectHabitIconModal}
+            options={{ title: "Select icon" }}
           />
         </RootStack.Group>
 

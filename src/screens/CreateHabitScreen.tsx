@@ -1,17 +1,10 @@
-import { useReducer } from "react";
-import { Pressable } from "react-native";
+import { useReducer, useState } from "react";
+import { Modal, Pressable, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
-import {
-  Block,
-  Text,
-  Button,
-  Input,
-  Icon,
-  Toggle,
-  TitleToggleRow,
-  PrimaryButton,
-} from "../components";
+import { Block, Text, Button, Input, Icon } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
+import TitleToggleRow from "../components/TitleToggleRow";
+import PrimaryButton from "../components/PrimaryButton";
 import {
   createHabitFormInitialState,
   createHabitFormReducer,
@@ -21,6 +14,7 @@ import {
 
 import { useTheme } from "../hooks/useTheme";
 import ModalNavbar from "../components/ModalNavbar";
+import SelectHabitIconModal from "./SelectHabitIconModal";
 
 const POMODORE_OPTIONS = ["15", "30", "60", "120"];
 
@@ -33,6 +27,7 @@ const CreateHabitScreen: React.FC<
     createHabitFormReducer,
     createHabitFormInitialState
   );
+  const [showSelectIconModal, setSelectIconModal] = useState<boolean>(false);
 
   const onInputChange = (input: TCreateHabitFormInputType, text: string) => {
     formDispatch({
@@ -103,7 +98,7 @@ const CreateHabitScreen: React.FC<
 
       <Block padding={sizes.padding}>
         <Button
-          onPress={() => console.log("Go to choose icon")}
+          onPress={() => setSelectIconModal(true)}
           style={{
             alignSelf: "center",
             alignItems: "center",
@@ -175,6 +170,10 @@ const CreateHabitScreen: React.FC<
           </Text>
         </Pressable>
       </Block>
+
+      {showSelectIconModal && (
+        <SelectHabitIconModal onClose={() => setSelectIconModal(false)} />
+      )}
     </Block>
   );
 };

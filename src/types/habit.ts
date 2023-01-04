@@ -1,12 +1,12 @@
+import { THabitIconType } from "../assets/icons/icons";
 import { IDay } from "./dayCell";
-import { TIcon } from "./icon";
 
 export interface IHabit {
   id: string;
   createdBy: string;
   name: string;
   desc?: string;
-  icon: TIcon | "none";
+  icon: THabitIconType | "none";
 
   days: IDay[];
 

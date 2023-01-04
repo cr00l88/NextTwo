@@ -1,12 +1,14 @@
 import { Button, Text } from "./index";
 import { useTheme } from "../hooks/useTheme";
+import { StyleProp, ViewStyle } from "react-native";
 
 interface IPrimaryButtonProps {
   title: string;
   onPress: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
-const PrimaryButton = ({ title, onPress }: IPrimaryButtonProps) => {
+const PrimaryButton = ({ title, onPress, style }: IPrimaryButtonProps) => {
   const { colors, sizes } = useTheme();
   return (
     <Button
@@ -16,6 +18,7 @@ const PrimaryButton = ({ title, onPress }: IPrimaryButtonProps) => {
       color={colors.black}
       radius={sizes.buttonRadius}
       onPress={onPress}
+      style={style}
     >
       <Text body color={colors.white}>
         {title}

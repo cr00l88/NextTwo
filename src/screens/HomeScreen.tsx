@@ -20,7 +20,6 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         getHabit(item.id);
         navigation.navigate("HabitActionSheetModal", { id: item.id });
       }}
-      onPressDelete={() => onDeleteHabit(item.id)}
     />
   );
 

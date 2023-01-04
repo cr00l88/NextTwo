@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import { useTheme } from "../hooks/useTheme";
 
-interface IButtonProps extends TouchableOpacityProps {
+type TViewStyleProps = Pick<ViewStyle, "width">;
+
+interface IButtonProps extends TouchableOpacityProps, TViewStyleProps {
   children?: React.ReactNode;
   color?: ViewStyle["backgroundColor"];
   radius?: ViewStyle["borderRadius"];
@@ -38,8 +40,8 @@ const Button = ({
   children,
   color,
   radius,
-
   height,
+  width,
   margin,
   marginTop,
   marginBottom,
@@ -69,6 +71,7 @@ const Button = ({
     color !== undefined && { backgroundColor: color },
     radius !== undefined && { borderRadius: radius },
     height !== undefined && { height },
+
     margin !== undefined && { margin },
     marginTop !== undefined && { marginTop },
     marginBottom !== undefined && { marginBottom },

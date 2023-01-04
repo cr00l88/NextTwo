@@ -1,5 +1,5 @@
 import React from "react";
-import { ColorValue, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { ColorValue, StyleSheet, ViewStyle } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { Icons, TIconType } from "../assets/icons/icons";
 import { useTheme } from "../hooks/useTheme";

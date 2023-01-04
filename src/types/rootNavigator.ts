@@ -6,6 +6,7 @@ export type RootNavigatorParamsList = {
   SettingsScreen: undefined;
   HabitDetailsScreen: { id: string };
   HabitActionSheetModal: { id: string };
+  SelectHabitIconModal: { id: string };
 };
 
 export type RootStackScreenProps<T extends keyof RootNavigatorParamsList> =
