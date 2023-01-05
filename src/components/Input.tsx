@@ -11,6 +11,7 @@ import { useTheme } from "../hooks/useTheme";
 interface IInputProps extends TextInputProps {
   children?: React.ReactNode;
   border?: boolean;
+  fontSize?: TextStyle["fontSize"];
   margin?: TextStyle["margin"];
   marginTop?: TextStyle["marginTop"];
   marginBottom?: TextStyle["marginBottom"];
@@ -31,6 +32,7 @@ interface IInputProps extends TextInputProps {
 const Input = ({
   children,
   border,
+  fontSize,
   margin,
   marginTop,
   marginBottom,
@@ -56,6 +58,7 @@ const Input = ({
       borderRadius: sizes.inputRadius,
       borderWidth: sizes.inputBorder,
     },
+    fontSize !== undefined && { fontSize },
     margin !== undefined && { margin },
     marginTop !== undefined && { marginTop },
     marginBottom !== undefined && { marginBottom },

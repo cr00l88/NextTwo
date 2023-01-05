@@ -3,17 +3,15 @@ import {
   PressableProps,
   StyleProp,
   StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from "react-native";
-import { Icons, TIconType } from "../assets/icons/icons";
+import { SystemIcons, TSystemIconType } from "../assets/icons/icons";
 import { SvgXml } from "react-native-svg";
 import { ColorValue } from "react-native";
 
 interface IIconButtonProps {
-  icon: TIconType;
+  icon: TSystemIconType;
   color?: ColorValue | string;
   backgroundColor?: string;
   hitSlop?: number;
@@ -53,19 +51,9 @@ const IconButton: React.FC<IIconButtonProps> = ({
       style={buttonStyle}
       {...props}
     >
-      <SvgXml color={color} xml={Icons[icon]} />
+      <SvgXml color={color} xml={SystemIcons[icon]} />
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "600",
-  },
-});
 
 export default IconButton;

@@ -37,17 +37,15 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
       <Block paddingHorizontal={16}>
         <Button
           hitSlopArea
-          color="navy"
+          color="black"
           radius={4}
           paddingVertical={8}
           paddingHorizontal={16}
           marginVertical={8}
-          onPress={() =>
-            console.log(!habits.length ? "nothing to print" : habits[0].days)
-          }
+          onPress={() => navigation.navigate("PomodoroScreen", { id: "1234" })}
         >
-          <Text color="white" align="center">
-            Print habit
+          <Text body color="white" align="center">
+            Go to pomodore
           </Text>
         </Button>
 

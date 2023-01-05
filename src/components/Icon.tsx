@@ -1,12 +1,12 @@
 import React from "react";
 import { ColorValue, StyleSheet, ViewStyle } from "react-native";
 import { SvgXml } from "react-native-svg";
-import { Icons, TIconType } from "../assets/icons/icons";
+import { Icons, TIcon } from "../assets/icons/icons";
 import { useTheme } from "../hooks/useTheme";
 import Block from "./Block";
 
 interface IIconProps {
-  icon: TIconType;
+  icon: TIcon;
   color?: ColorValue;
   size?: number;
   margin?: ViewStyle["margin"];

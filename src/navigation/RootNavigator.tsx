@@ -8,6 +8,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import HabitDetailsScreen from "../screens/HabitDetailsScreen";
 import HabitActionSheetModal from "../screens/HabitActionSheetModal";
 import SelectHabitIconModal from "../screens/SelectHabitIconModal";
+import PomodoroScreen from "../screens/PomodoroScreen";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
@@ -20,6 +21,16 @@ const RootNavigator: React.FC = () => {
           component={HomeScreen}
           options={{ headerShown: false }}
         />
+        <RootStack.Screen
+          name="PomodoroScreen"
+          component={PomodoroScreen}
+          options={{
+            headerShown: false,
+            presentation: "fullScreenModal",
+            animation: "fade",
+          }}
+        />
+
         <RootStack.Group
           screenOptions={{
             presentation: "modal",

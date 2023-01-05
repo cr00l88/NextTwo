@@ -1,13 +1,17 @@
 import { IHabit, TNewHabit } from "../types/habit";
 
-export type TCreateHabitFormInputType = "name" | "desc" | "pomodoreTime";
+export type TCreateHabitFormUpdateType =
+  | "name"
+  | "desc"
+  | "pomodoreTime"
+  | "icon";
 export type TCreateHabitFormToggleType = "pomodore" | "notification";
 
 type TCreateHabitFormAction =
   | {
       type: "UPDATE";
       payload: {
-        key: TCreateHabitFormInputType;
+        key: TCreateHabitFormUpdateType;
         value: string;
       };
     }

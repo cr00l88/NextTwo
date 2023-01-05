@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { FlatList } from "react-native";
-import { Block, Text, Button } from "./";
+import { Block, Text, Button, Icon } from "./";
 import { THabitRow } from "../types/habit";
 import IconButton from "./IconButton";
 import DayCell from "./DayCell";
@@ -24,6 +24,7 @@ const HabitRow = ({
     <Button onPress={onPressRow}>
       <Block color={"white"} border shadow padding={16} marginVertical={4}>
         <Block row>
+          {habit.icon !== "none" && <Icon icon={habit.icon} color="black" />}
           <Block>
             <Text h4>{habit.name}</Text>
             <Text p color={colors.gray}>
@@ -48,8 +49,8 @@ const HabitRow = ({
         onPress={onPressMoreOptions}
         style={{
           position: "absolute",
-          top: 10,
-          right: 10,
+          top: 16,
+          right: 16,
           width: 22,
           height: 22,
           borderRadius: 4,

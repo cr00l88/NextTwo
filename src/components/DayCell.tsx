@@ -17,7 +17,6 @@ const DayCell = ({ status, size = 18 }: IDayCellProps) => {
       width: size,
       height: size,
       borderRadius: 3,
-      // marginVertical: 2,
     },
   });
 

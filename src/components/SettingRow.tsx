@@ -1,11 +1,11 @@
 import React from "react";
 import { useTheme } from "../hooks/useTheme";
 import { Block, Icon, Text } from "./";
-import { TIconType } from "../assets/icons/icons";
+import { TSystemIconType } from "../assets/icons/icons";
 
 interface ISettingRowProps {
   children?: React.ReactNode;
-  icon: TIconType;
+  icon: TSystemIconType;
   title: string;
   desc: string;
 }

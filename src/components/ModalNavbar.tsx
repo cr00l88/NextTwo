@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SvgXml } from "react-native-svg";
-import { Icons } from "../assets/icons/icons";
+import { SystemIcons } from "../assets/icons/icons";
 import { useTheme } from "../hooks/useTheme";
 import { Block, Button, Text } from "./index";
 
@@ -40,7 +40,7 @@ const ModalNavbar = ({
             setCounterWidth(width);
           }}
         >
-          <SvgXml color={colors.black} xml={Icons["xMark"]} />
+          <SvgXml color={colors.black} xml={SystemIcons["xMark"]} />
         </Button>
       </Block>
 

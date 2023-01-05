@@ -1,4 +1,5 @@
 import { useFonts } from "expo-font";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import RootNavigator from "./src/navigation/RootNavigator";
 import HabitsProvider from "./src/providers/HabitsProvider";
 import ThemeProvider from "./src/providers/ThemeProvider";
@@ -17,12 +18,14 @@ export default function App() {
   }
 
   return (
-    <UserProvider>
-      <ThemeProvider>
-        <HabitsProvider>
-          <RootNavigator />
-        </HabitsProvider>
-      </ThemeProvider>
-    </UserProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <UserProvider>
+        <ThemeProvider>
+          <HabitsProvider>
+            <RootNavigator />
+          </HabitsProvider>
+        </ThemeProvider>
+      </UserProvider>
+    </GestureHandlerRootView>
   );
 }

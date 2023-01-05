@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react";
-import { Modal, Pressable, StyleSheet } from "react-native";
+import { Pressable } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button, Input, Icon } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
@@ -8,13 +8,14 @@ import PrimaryButton from "../components/PrimaryButton";
 import {
   createHabitFormInitialState,
   createHabitFormReducer,
-  TCreateHabitFormInputType,
+  TCreateHabitFormUpdateType,
   TCreateHabitFormToggleType,
 } from "../reducers/createHabitFormReducer";
 
 import { useTheme } from "../hooks/useTheme";
 import ModalNavbar from "../components/ModalNavbar";
 import SelectHabitIconModal from "./SelectHabitIconModal";
+import { THabitIconType } from "../assets/icons/icons";
 
 const POMODORE_OPTIONS = ["15", "30", "60", "120"];
 
@@ -29,12 +30,22 @@ const CreateHabitScreen: React.FC<
   );
   const [showSelectIconModal, setSelectIconModal] = useState<boolean>(false);
 
-  const onInputChange = (input: TCreateHabitFormInputType, text: string) => {
+  const onChange = (input: TCreateHabitFormUpdateType, text: string) => {
     formDispatch({
       type: "UPDATE",
       payload: {
         key: input,
         value: text,
+      },
+    });
+  };
+
+  const onChangeIcon = (icon: THabitIconType) => {
+    formDispatch({
+      type: "UPDATE",
+      payload: {
+        key: "icon",
+        value: icon,
       },
     });
   };
@@ -120,21 +131,23 @@ const CreateHabitScreen: React.FC<
           <Text body>Name</Text>
           <Input
             value={formState.name}
-            placeholder="Name"
-            border
-            padding={12}
-            marginVertical={4}
-            onChangeText={(text) => onInputChange("name", text)}
+            placeholder="Enter habit name"
+            placeholderTextColor={colors.lightGray}
+            fontSize={24}
+            marginVertical={8}
+            onChangeText={(text) => onChange("name", text)}
           />
         </Block>
         <Block>
           <Text body>Description</Text>
           <Input
-            placeholder="Description"
-            border
-            padding={12}
-            marginVertical={4}
-            onChangeText={(text) => onInputChange("desc", text)}
+            placeholder="Optional"
+            // border
+            // padding={12}
+            placeholderTextColor={colors.lightGray}
+            fontSize={24}
+            marginVertical={8}
+            onChangeText={(text) => onChange("desc", text)}
           />
         </Block>
 
@@ -172,7 +185,11 @@ const CreateHabitScreen: React.FC<
       </Block>
 
       {showSelectIconModal && (
-        <SelectHabitIconModal onClose={() => setSelectIconModal(false)} />
+        <SelectHabitIconModal
+          selected={formState.icon}
+          onSelect={onChangeIcon}
+          onClose={() => setSelectIconModal(false)}
+        />
       )}
     </Block>
   );

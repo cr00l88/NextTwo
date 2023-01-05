@@ -21,14 +21,14 @@ export interface IFontSizes {
 }
 
 export interface ISpacing {
-  xs: number;
-  s: number;
-  sm: number;
-  m: number;
-  md: number;
-  l: number;
-  xl: number;
-  xxl: number;
+  xs: number; // 4
+  s: number; // 8
+  sm: number; // 12
+  m: number; // 16
+  md: number; // 20
+  l: number; // 24
+  xl: number; // 28
+  xxl: number; // 32
 }
 
 export interface ILineHeights {

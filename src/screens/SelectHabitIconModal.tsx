@@ -1,19 +1,21 @@
+import React, { useEffect } from "react";
+import { FlatList, Modal, Pressable, StyleSheet } from "react-native";
 import { Block, Text, Button, Icon } from "../components";
 import ModalNavbar from "../components/ModalNavbar";
 import { HabitIcons, THabitIconType } from "../assets/icons/icons";
-import React, { useEffect } from "react";
-import { FlatList, Modal, Pressable, StyleSheet } from "react-native";
 
 interface ISelectHabitIconModalProps {
-  selected?: THabitIconType;
+  selected?: THabitIconType | "none";
+  onSelect: (icon: THabitIconType) => void;
   onClose: () => void;
 }
 
 const SelectHabitIconModal = ({
   onClose,
+  onSelect,
   selected = "bike",
 }: ISelectHabitIconModalProps) => {
-  const IconList = Object.keys(HabitIcons);
+  const IconList = Object.keys(HabitIcons) as THabitIconType[];
 
   return (
     <Modal animationType="slide" transparent>
@@ -39,21 +41,24 @@ const SelectHabitIconModal = ({
         >
           <ModalNavbar title="Select icon" onPressClose={onClose} />
           <FlatList
-            style={{ marginVertical: 12 }}
+            style={{ marginVertical: 12, marginHorizontal: 16 }}
             data={IconList}
             numColumns={3}
             columnWrapperStyle={{ justifyContent: "space-between" }}
             renderItem={({ item }) => (
               <Block
-                flex={1 / 3}
+                // flex={1 / 3}
                 align="center"
                 paddingVertical={12}
-                margin={2}
+                marginVertical={2}
                 border
+                style={{ flexBasis: "33%" }}
               >
-                <Text color={item === selected ? "green" : "black"}>
-                  {item}
-                </Text>
+                <Button onPress={() => onSelect(item)}>
+                  <Text color={item === selected ? "green" : "black"}>
+                    {item}
+                  </Text>
+                </Button>
               </Block>
             )}
           />
