@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, View } from "react-native";
-import React, { useCallback, useImperativeHandle } from "react";
+import React, { useCallback, useImperativeHandle, useState } from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
@@ -18,6 +18,8 @@ type TBottomSheetProps = {
 };
 
 export type TBottomSheetRefProps = {
+  showModal: (contentHeight: number) => void;
+  closeModal: () => void;
   scrollTo: (destination: number) => void;
   isActive: () => boolean;
 };
@@ -28,8 +30,19 @@ const BottomSheet = React.forwardRef<TBottomSheetRefProps, TBottomSheetProps>(
     const { colors } = useTheme();
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
+    const [contentHeight, setContentHeight] = useState(0);
 
     const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + insets.top;
+
+    const showModal = useCallback((contentHeight: number) => {
+      scrollTo(-contentHeight);
+      active.value = true;
+    }, []);
+
+    const closeModal = useCallback(() => {
+      scrollTo(0);
+      active.value = false;
+    }, []);
 
     const scrollTo = useCallback((destination: number) => {
       "worklet";
@@ -42,10 +55,11 @@ const BottomSheet = React.forwardRef<TBottomSheetRefProps, TBottomSheetProps>(
       return active.value;
     }, []);
 
-    useImperativeHandle(ref, () => ({ scrollTo, isActive }), [
-      scrollTo,
-      isActive,
-    ]);
+    useImperativeHandle(
+      ref,
+      () => ({ showModal, closeModal, scrollTo, isActive }),
+      [scrollTo, isActive]
+    );
 
     const context = useSharedValue({ y: 0 });
     const gesture = Gesture.Pan()
@@ -63,6 +77,8 @@ const BottomSheet = React.forwardRef<TBottomSheetRefProps, TBottomSheetProps>(
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(MAX_TRANSLATE_Y);
         }
+
+        console.log(contentHeight);
       });
 
     const rBottomSheetStyle = useAnimatedStyle(() => {
@@ -74,6 +90,10 @@ const BottomSheet = React.forwardRef<TBottomSheetRefProps, TBottomSheetProps>(
     return (
       <GestureDetector gesture={gesture}>
         <Animated.View
+          onLayout={(event) => {
+            const { height } = event.nativeEvent.layout;
+            setContentHeight(height);
+          }}
           style={[
             styles.bottomSheetContainer,
             rBottomSheetStyle,

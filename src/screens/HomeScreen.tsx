@@ -8,7 +8,7 @@ import { FlatList } from "react-native";
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
 }) => {
-  const { habits, getHabit, onDeleteAllHabits, onUpdateHabits, onDeleteHabit } =
+  const { habits, getHabit, onDeleteAllHabits, onUpdateHabits } =
     useHabitsContext();
 
   const renderItem = ({ item }) => (

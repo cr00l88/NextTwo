@@ -5,6 +5,7 @@ import { useTheme } from "../hooks/useTheme";
 import { Block, Text, Button } from "../components";
 import BottomSheet, { TBottomSheetRefProps } from "../components/BottomSheet";
 import { useCallback, useRef, useState } from "react";
+import ModalNavbar from "../components/ModalNavbar";
 
 const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
   navigation,
@@ -58,20 +59,29 @@ const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
             Show modal
           </Text>
         </Button>
+
+        <Button
+          center
+          padding={10}
+          color={colors.black}
+          radius={4}
+          onPress={() => console.log(ref?.current?.isActive)}
+        >
+          <Text body color="yellow">
+            Status of modal
+          </Text>
+        </Button>
       </Block>
 
-      {showOverlay && (
-        <Pressable onPress={onPress}>
-          <Block
-            style={[
-              StyleSheet.absoluteFill,
-              { backgroundColor: "rgba(0,0,0,0.2)" },
-            ]}
+      <BottomSheet ref={ref}>
+        <Block>
+          <ModalNavbar
+            title="Choose Time"
+            onPressClose={() => ref?.current.closeModal()}
           />
-        </Pressable>
-      )}
-
-      <BottomSheet ref={ref} />
+          <Block style={{ width: 100, height: 100, backgroundColor: "red" }} />
+        </Block>
+      </BottomSheet>
     </Block>
   );
 };

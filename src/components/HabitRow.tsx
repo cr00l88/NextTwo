@@ -17,19 +17,32 @@ const HabitRow = ({
   onPressRow,
   onPressMoreOptions,
 }: IHabitRowProps) => {
-  const { colors } = useTheme();
+  const { colors, sizes } = useTheme();
   const renderItem = ({ item }) => <DayCell status={item.status} />;
 
   return (
     <Button onPress={onPressRow}>
       <Block color={"white"} border shadow padding={16} marginVertical={4}>
-        <Block row>
-          {habit.icon !== "none" && <Icon icon={habit.icon} color="black" />}
+        <Block row align="center" marginBottom={10}>
+          {habit.icon !== "none" && (
+            <Block
+              justify="center"
+              align="center"
+              color={"#F3F3F3"}
+              marginRight={sizes.s}
+              padding={sizes.s}
+              style={{ borderRadius: 4 }}
+            >
+              <Icon icon={habit.icon} color="black" />
+            </Block>
+          )}
           <Block>
             <Text h4>{habit.name}</Text>
-            <Text p color={colors.gray}>
-              {habit.desc}
-            </Text>
+            {habit.desc && (
+              <Text p color={colors.gray}>
+                {habit.desc}
+              </Text>
+            )}
           </Block>
         </Block>
 
