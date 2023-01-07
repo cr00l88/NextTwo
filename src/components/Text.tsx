@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from "react-native";
 import { useTheme } from "../hooks/useTheme";
 
@@ -128,4 +128,4 @@ const Text = ({
   );
 };
 
-export default Text;
+export default memo(Text);

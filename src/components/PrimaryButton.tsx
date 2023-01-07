@@ -10,6 +10,7 @@ interface IPrimaryButtonProps {
 
 const PrimaryButton = ({ title, onPress, style }: IPrimaryButtonProps) => {
   const { colors, sizes } = useTheme();
+
   return (
     <Button
       center

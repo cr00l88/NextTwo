@@ -1,21 +1,25 @@
 import React from "react";
-import { ColorValue, StyleSheet, ViewStyle } from "react-native";
+import { ColorValue, StyleSheet, View, ViewStyle } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { Icons, TIcon } from "../assets/icons/icons";
 import { useTheme } from "../hooks/useTheme";
 import Block from "./Block";
 
-interface IIconProps {
+type TViewStyleProps = Pick<
+  ViewStyle,
+  | "margin"
+  | "marginTop"
+  | "marginBottom"
+  | "marginLeft"
+  | "marginRight"
+  | "marginHorizontal"
+  | "marginVertical"
+>;
+
+interface IIconProps extends TViewStyleProps {
   icon: TIcon;
   color?: ColorValue;
   size?: number;
-  margin?: ViewStyle["margin"];
-  marginTop?: ViewStyle["marginTop"];
-  marginBottom?: ViewStyle["marginBottom"];
-  marginLeft?: ViewStyle["marginLeft"];
-  marginRight?: ViewStyle["marginRight"];
-  marginHorizontal?: ViewStyle["marginHorizontal"];
-  marginVertical?: ViewStyle["marginVertical"];
 }
 
 const Icon = ({

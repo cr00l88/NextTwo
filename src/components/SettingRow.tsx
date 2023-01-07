@@ -12,6 +12,7 @@ interface ISettingRowProps {
 
 const SettingRow = ({ children, icon, title, desc }: ISettingRowProps) => {
   const { colors, sizes } = useTheme();
+
   return (
     <Block marginVertical={sizes.m} justify="space-between" align="center" row>
       <Block row align="center" style={{ flexShrink: 1 }}>

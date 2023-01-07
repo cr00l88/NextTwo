@@ -16,6 +16,7 @@ import { useTheme } from "../hooks/useTheme";
 import ModalNavbar from "../components/ModalNavbar";
 import SelectHabitIconModal from "./SelectHabitIconModal";
 import { THabitIconType } from "../assets/icons/icons";
+import AddHabitIconButton from "../components/AddHabitIconButton";
 
 const POMODORE_OPTIONS = ["15", "30", "60", "120"];
 
@@ -108,24 +109,10 @@ const CreateHabitScreen: React.FC<
       />
 
       <Block padding={sizes.padding}>
-        <Button
+        <AddHabitIconButton
+          currentIcon={formState.icon}
           onPress={() => setSelectIconModal(true)}
-          style={{
-            alignSelf: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 80,
-            height: 80,
-            borderRadius: 4,
-            borderColor: colors.lightGray,
-            borderWidth: 2,
-          }}
-        >
-          <Icon icon="plus" color={colors.black} />
-          <Text body marginTop={8}>
-            Add icon
-          </Text>
-        </Button>
+        />
 
         <Block marginVertical={sizes.md}>
           <Text body>Name</Text>
@@ -142,8 +129,6 @@ const CreateHabitScreen: React.FC<
           <Text body>Description</Text>
           <Input
             placeholder="Optional"
-            // border
-            // padding={12}
             placeholderTextColor={colors.lightGray}
             fontSize={24}
             marginVertical={8}
