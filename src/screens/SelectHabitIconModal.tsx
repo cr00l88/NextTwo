@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FlatList, Modal, Pressable, StyleSheet } from "react-native";
-import { Block, Text, Button, Icon } from "../components";
-import ModalNavbar from "../components/ModalNavbar";
+import { useTheme } from "../hooks/useTheme";
 import { HabitIcons, THabitIconType } from "../assets/icons/icons";
+import { Block, Button, Icon } from "../components";
+import ModalNavbar from "../components/ModalNavbar";
 
 interface ISelectHabitIconModalProps {
   selected?: THabitIconType | "none";
@@ -15,7 +16,31 @@ const SelectHabitIconModal = ({
   onSelect,
   selected = "bike",
 }: ISelectHabitIconModalProps) => {
+  const { colors, sizes } = useTheme();
   const IconList = Object.keys(HabitIcons) as THabitIconType[];
+
+  const renderItem = ({ item }) => (
+    <Button
+      onPress={() => {
+        onSelect(item);
+        onClose();
+      }}
+    >
+      <Block
+        align="center"
+        justify="center"
+        paddingVertical={12}
+        padding={24}
+        border={item !== selected}
+        color={item === selected ? colors.black : colors.white}
+      >
+        <Icon
+          icon={item}
+          color={item === selected ? colors.white : colors.black}
+        />
+      </Block>
+    </Button>
+  );
 
   return (
     <Modal animationType="slide" transparent>
@@ -41,26 +66,11 @@ const SelectHabitIconModal = ({
         >
           <ModalNavbar title="Select icon" onPressClose={onClose} />
           <FlatList
-            style={{ marginVertical: 12, marginHorizontal: 16 }}
+            style={{ marginHorizontal: sizes.padding, paddingVertical: 12 }}
             data={IconList}
-            numColumns={3}
-            columnWrapperStyle={{ justifyContent: "space-between" }}
-            renderItem={({ item }) => (
-              <Block
-                // flex={1 / 3}
-                align="center"
-                paddingVertical={12}
-                marginVertical={2}
-                border
-                style={{ flexBasis: "33%" }}
-              >
-                <Button onPress={() => onSelect(item)}>
-                  <Text color={item === selected ? "green" : "black"}>
-                    {item}
-                  </Text>
-                </Button>
-              </Block>
-            )}
+            numColumns={4}
+            columnWrapperStyle={{ justifyContent: "space-evenly" }}
+            renderItem={renderItem}
           />
         </Block>
       </Block>
