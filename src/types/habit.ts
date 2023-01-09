@@ -9,6 +9,7 @@ export interface IHabit {
   icon: THabitIconType | "none";
 
   days: IDay[];
+  isDoneToday?: boolean;
 
   pomodore: boolean;
   pomodoreTime: "15" | "30" | "60" | "120";

@@ -1,12 +1,21 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
-import { IDay } from "../types/dayCell";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from "react";
+import {
+  getHabitsData,
+  markDoneHabitData,
+  removeAllHabitsData,
+  removeHabitData,
+  storeNewHabitData,
+  updateHabitsData,
+} from "../storage/habits";
 import { IHabit, TNewHabit } from "../types/habit";
 import { generateId } from "../utils/generateId";
-import {
-  generateMockTwoNextMonthInDays,
-  generateTwoNextMonthInDays,
-} from "../utils/generateTwoNextMonthInDays";
-import { updateDayStatus } from "../utils/updateDayStatus";
+import { generateTwoNextMonthInDays } from "../utils/generateTwoNextMonthInDays";
+import { getTodayDate } from "../utils/getTodayDate";
 
 interface IHabitsContextState {
   habits: IHabit[];
@@ -34,6 +43,25 @@ export const HabitsContext = createContext<IHabitsContextState>(initialState);
 const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [state, setState] = useState<IHabitsContextState>(initialState);
 
+  useEffect(() => {
+    getAllHabits();
+  }, []);
+
+  const getAllHabits = async () => {
+    try {
+      const data = await getHabitsData();
+
+      if (data !== null) {
+        setState((prevState) => ({
+          ...prevState,
+          habits: [...data],
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getHabit = (id: string) => {
     setState((prevState) => ({ ...prevState, habit: undefined }));
 
@@ -44,102 +72,78 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
       : console.error("Error! Cannot find habit.");
   };
 
-  const onCreateHabit = (habit: TNewHabit) => {
+  const onCreateHabit = async (habit: TNewHabit) => {
     const randomId = generateId();
     const days = generateTwoNextMonthInDays();
+    const today = getTodayDate("DashedString") as string;
 
     //mocked days
-    const mockDays = generateMockTwoNextMonthInDays();
+    // const mockDays = generateMockTwoNextMonthInDays();
 
     const newHabit: IHabit = {
       id: randomId,
-      createdBy: "Today",
+      createdBy: today,
       name: habit.name,
       desc: habit.desc,
       icon: habit.icon,
-      days: mockDays,
+      days: days,
       pomodore: habit.pomodore,
       pomodoreTime: habit.pomodoreTime,
       notification: habit.notification,
     };
 
-    setState((prevState) => ({
-      ...prevState,
-      habits: [...prevState.habits, newHabit],
-    }));
-  };
-
-  const onUpdateHabits = () => {
-    if (!state.habits.length) {
-      console.log("No habits there");
-    } else {
-      const updatedHabits = state.habits.map((habit) => ({
-        ...habit,
-        days: [
-          ...habit.days.map(
-            (day) =>
-              ({
-                ...day,
-                status: updateDayStatus(day.date, day.status),
-              } as IDay)
-          ),
-        ],
-      }));
-
-      setState((prevState) => ({
-        ...prevState,
-        habits: [...updatedHabits],
-      }));
+    try {
+      await storeNewHabitData(newHabit);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllHabits();
     }
   };
 
-  const onMarkDoneToday = (id: string) => {
-    const updatedHabits = state.habits.map((habit) =>
-      habit.id === id
-        ? {
-            ...habit,
-            days: [
-              ...habit.days.map((day) =>
-                day.status === "TODAY_TODO"
-                  ? ({ ...day, status: "TODAY_SUCCESS" } as IDay)
-                  : day
-              ),
-            ],
-          }
-        : habit
-    );
-
-    // const searchHabit = updatedHabits.find((habit) => habit.id === id);
-
-    setState((prevState) => ({
-      ...prevState,
-      habits: [...updatedHabits],
-      // habit: searchHabit,
-    }));
-
-    getHabit(id);
-  };
-
-  const onDeleteHabit = (id: string) => {
-    const updatedHabits = state.habits.filter((habit) => {
-      if (habit.id !== id) {
-        return habit;
+  const onUpdateHabits = async () => {
+    if (!state.habits.length) {
+      console.log("No habits there");
+    } else {
+      try {
+        await updateHabitsData(state.habits);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        getAllHabits();
       }
-    });
-
-    setState((prevState) => ({
-      ...prevState,
-      habits: [...updatedHabits],
-    }));
+    }
   };
 
-  const onDeleteAllHabits = () => {
+  const onMarkDoneToday = async (id: string) => {
+    try {
+      await markDoneHabitData(id, state.habits);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllHabits();
+    }
+  };
+
+  const onDeleteHabit = async (id: string) => {
+    try {
+      await removeHabitData(id, state.habits);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllHabits();
+    }
+  };
+
+  const onDeleteAllHabits = async () => {
     if (state.habits) {
-      setState((prevState) => ({
-        ...prevState,
-        habits: [],
-      }));
-      console.log("Success! Habits deleted.");
+      try {
+        await removeAllHabitsData();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        getAllHabits();
+      }
     } else {
       console.log("No habits there.");
     }

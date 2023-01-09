@@ -4,6 +4,9 @@ import { useHabitsContext } from "../hooks/useHabitsContext";
 import HomeNavbar from "../components/HomeNavbar";
 import HabitRow from "../components/HabitRow";
 import { FlatList } from "react-native";
+import PrimaryButton from "../components/PrimaryButton";
+import { getHabits } from "../storage/habits";
+import { removeData } from "../storage/storage";
 
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
@@ -62,6 +65,21 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
             Delete all habits
           </Text>
         </Button>
+
+        <Button
+          hitSlopArea
+          color="crimson"
+          radius={4}
+          paddingVertical={8}
+          paddingHorizontal={16}
+          marginVertical={8}
+          onPress={() => removeData("@habits")}
+        >
+          <Text color="white" align="center">
+            Clear storage data
+          </Text>
+        </Button>
+
         <Button
           hitSlopArea
           center
@@ -74,6 +92,18 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         >
           <Text color="white">Check</Text>
         </Button>
+
+        <PrimaryButton
+          title="Read async data"
+          onPress={() => {
+            try {
+              const data = getHabits();
+              console.log(data);
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+        />
 
         <FlatList
           data={habits}

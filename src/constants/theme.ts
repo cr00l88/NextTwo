@@ -83,7 +83,7 @@ const SIZES: ISizes = {
   inputBorder: StyleSheet.hairlineWidth,
 
   //modal
-  modalRadius: 34,
+  modalRadius: 24,
 };
 
 const FONT_SIZES: IFontSizes = {

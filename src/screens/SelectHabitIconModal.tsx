@@ -1,9 +1,17 @@
 import React from "react";
-import { FlatList, Modal, Pressable, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  Modal,
+  Pressable,
+  StyleSheet,
+} from "react-native";
 import { useTheme } from "../hooks/useTheme";
 import { HabitIcons, THabitIconType } from "../assets/icons/icons";
 import { Block, Button, Icon } from "../components";
 import ModalNavbar from "../components/ModalNavbar";
+
+const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 interface ISelectHabitIconModalProps {
   selected?: THabitIconType | "none";
@@ -60,8 +68,9 @@ const SelectHabitIconModal = ({
             position: "absolute",
             bottom: 0,
             width: "100%",
-            borderTopLeftRadius: 24,
-            borderTopRightRadius: 24,
+            height: SCREEN_HEIGHT / 2,
+            borderTopLeftRadius: sizes.modalRadius,
+            borderTopRightRadius: sizes.modalRadius,
           }}
         >
           <ModalNavbar title="Select icon" onPressClose={onClose} />

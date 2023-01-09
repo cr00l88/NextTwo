@@ -1,4 +1,4 @@
-type TFormatDate = "Object" | "Dash";
+type TFormatDate = "Object" | "DashedString";
 
 export const getTodayDate = (format: TFormatDate) => {
   const today = new Date();
@@ -9,8 +9,8 @@ export const getTodayDate = (format: TFormatDate) => {
     year: today.toLocaleString("en-US", { year: "numeric" }),
   };
 
-  if (format === "Dash") {
-    return `${todayDate.day}/${todayDate.month}/${todayDate.year}`;
+  if (format === "DashedString") {
+    return `${todayDate.day}-${todayDate.month}-${todayDate.year}`;
   } else if (format === "Object") {
     return today;
   }
