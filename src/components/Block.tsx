@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   ScrollView,
   ScrollViewProps,
+  StatusBar,
   ViewProps,
 } from "react-native";
 import { StyleProp } from "react-native";
@@ -122,6 +123,9 @@ const Block = ({
   const blockID =
     Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id };
 
+  const androidStatusBarHeight =
+    Platform.OS === "android" ? StatusBar.currentHeight : 0;
+
   if (scroll) {
     return (
       <ScrollView {...blockID} {...props} style={blockStyle}>
@@ -132,7 +136,11 @@ const Block = ({
 
   if (safe) {
     return (
-      <SafeAreaView {...blockID} {...props} style={blockStyle}>
+      <SafeAreaView
+        {...blockID}
+        {...props}
+        style={[blockStyle, { paddingTop: androidStatusBarHeight }]}
+      >
         {children}
       </SafeAreaView>
     );
