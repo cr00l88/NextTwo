@@ -12,7 +12,7 @@ import PomodoroScreen from "../screens/PomodoroScreen";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
-const RootNavigator: React.FC = () => {
+const RootNavigator = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator>

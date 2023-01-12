@@ -20,7 +20,7 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
       paddingVertical={8}
     >
       <Button
-        hitSlopArea
+        // hitSlopArea
         color={colors.lightGray}
         radius={4}
         padding={6}
@@ -32,7 +32,7 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
       <SvgXml color={colors.black} xml={Icons["logo"]} />
 
       <Button
-        hitSlopArea
+        // hitSlopArea
         color={colors.black}
         radius={4}
         padding={6}

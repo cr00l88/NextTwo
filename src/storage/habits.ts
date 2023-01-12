@@ -41,48 +41,43 @@ export const getHabitsData = async () => {
 };
 
 export const updateHabitsData = async (habits: IHabit[]) => {
-  const updatedHabits = habits.map((habit) => ({
-    ...habit,
-    days: [
-      ...habit.days.map(
-        (day) =>
-          ({
-            ...day,
-            status: updateDayStatus(day.date, day.status),
-          } as IDay)
-      ),
-    ],
-  }));
-
   try {
+    const updatedHabits = habits.map((habit) => ({
+      ...habit,
+      days: [
+        ...habit.days.map(
+          (day) =>
+            ({
+              ...day,
+              status: updateDayStatus(day.date, day.status),
+            } as IDay)
+        ),
+      ],
+    }));
     await storeHabitsData(updatedHabits);
-
-    return updatedHabits;
   } catch (error) {
     console.error(error);
   }
 };
 
 export const markDoneHabitData = async (id: string, habits: IHabit[]) => {
-  const updatedHabits = habits.map((habit) =>
-    habit.id === id
-      ? {
-          ...habit,
-          days: [
-            ...habit.days.map((day) =>
-              day.status === "TODAY_TODO"
-                ? ({ ...day, status: "TODAY_SUCCESS" } as IDay)
-                : day
-            ),
-          ],
-        }
-      : habit
-  );
-
   try {
-    await storeHabitsData(updatedHabits);
+    const updatedHabits = habits.map((habit) =>
+      habit.id === id
+        ? {
+            ...habit,
+            days: [
+              ...habit.days.map((day) =>
+                day.status === "TODAY_TODO"
+                  ? ({ ...day, status: "TODAY_SUCCESS" } as IDay)
+                  : day
+              ),
+            ],
+          }
+        : habit
+    );
 
-    return updatedHabits;
+    await storeHabitsData(updatedHabits);
   } catch (error) {
     console.error(error);
   }
@@ -90,7 +85,7 @@ export const markDoneHabitData = async (id: string, habits: IHabit[]) => {
 
 export const removeAllHabitsData = async () => {
   try {
-    await removeData(KEY);
+    await storeHabitsData([]);
   } catch (error) {
     console.error(error);
   }

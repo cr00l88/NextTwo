@@ -45,6 +45,12 @@ export interface ILetterSpacing {
   text: number;
 }
 
+interface IThemeModeColors {
+  text: string;
+  desc: string;
+  bg: string;
+}
+
 export interface IColors {
   // black: ColorValue;
   black: ColorValue;
@@ -55,6 +61,8 @@ export interface IColors {
   success: ColorValue;
   warining: ColorValue;
   error: ColorValue;
+  light: IThemeModeColors;
+  dark: IThemeModeColors;
 }
 
 export interface ITheme {
@@ -118,6 +126,18 @@ const LETTER_SPACING: ILetterSpacing = {
   text: 0,
 };
 
+const LIGHT_MODE: IThemeModeColors = {
+  text: "#090909",
+  desc: "#A3A3A3",
+  bg: "#FFFFFF",
+};
+
+const DARK_MODE: IThemeModeColors = {
+  text: "#FFFFFF",
+  desc: "#B7B1B1",
+  bg: "#090909",
+};
+
 const COLORS: IColors = {
   black: "#090909",
   white: "#FFFFFF",
@@ -127,6 +147,8 @@ const COLORS: IColors = {
   success: "#5FE037",
   warining: "#FFCF51",
   error: "#FF4646",
+  light: LIGHT_MODE,
+  dark: DARK_MODE,
 };
 
 export const THEME: ITheme = {

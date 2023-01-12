@@ -98,8 +98,7 @@ const Button = ({
 
   return (
     <TouchableOpacity
-      // onPress={onPress}
-      hitSlop={hitSlopArea !== undefined && hitSlop}
+      // hitSlop={hitSlopArea !== undefined && hitSlop}
       style={buttonStyle}
       {...props}
     >

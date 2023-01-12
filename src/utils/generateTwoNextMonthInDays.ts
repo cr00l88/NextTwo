@@ -9,7 +9,7 @@ export const generateTwoNextMonthInDays = (): IDay[] => {
   const tYear = today.toLocaleString("default", {
     year: "numeric",
   });
-  const startDate = `${tYear}-${tMonth}-${tDay}`;
+  const startDate = `${tYear}/${tMonth}/${tDay}`;
 
   let days: IDay[] = [];
 
@@ -26,7 +26,7 @@ export const generateTwoNextMonthInDays = (): IDay[] => {
     const month = next.toLocaleString("default", { month: "numeric" });
     const year = next.toLocaleString("default", { year: "numeric" });
 
-    const date = `${year}-${month}-${day}`;
+    const date = `${year}/${month}/${day}`;
 
     days.push({ id: i, date, status: "NEXT" });
   }

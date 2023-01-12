@@ -47,7 +47,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      hitSlop={hitSlop !== undefined && hitSlopArea}
+      hitSlop={hitSlop ? hitSlopArea : undefined}
       style={buttonStyle}
       {...props}
     >

@@ -5,6 +5,7 @@ import { useTheme } from "../hooks/useTheme";
 import { useState } from "react";
 import SettingRow from "../components/SettingRow";
 import ModalNavbar from "../components/ModalNavbar";
+import { useThemeMode } from "../hooks/useThemeMode";
 
 const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   navigation,
@@ -12,9 +13,10 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   const { onDeleteAllHabits } = useHabitsContext();
   const [isNotify, setNotify] = useState<boolean>(false);
   const { colors, sizes } = useTheme();
+  const { mode, onChangeMode } = useThemeMode();
 
   return (
-    <Block flex={1} color="white">
+    <Block flex={1} color={colors[mode].bg}>
       <ModalNavbar title="Settings" onPressClose={() => navigation.goBack()} />
       <Block paddingHorizontal={sizes.padding}>
         <SettingRow
@@ -23,8 +25,11 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           icon="darkMode"
         >
           <Toggle
-            onPress={() => setNotify(!isNotify)}
-            initialState={isNotify}
+            onPress={() => {
+              onChangeMode(mode === "dark" ? "light" : "dark");
+              console.log(mode);
+            }}
+            initialState={mode === "dark" ? true : false}
           />
         </SettingRow>
         <SettingRow

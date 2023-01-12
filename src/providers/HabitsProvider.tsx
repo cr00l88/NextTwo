@@ -14,12 +14,16 @@ import {
 } from "../storage/habits";
 import { IHabit, TNewHabit } from "../types/habit";
 import { generateId } from "../utils/generateId";
-import { generateTwoNextMonthInDays } from "../utils/generateTwoNextMonthInDays";
+import {
+  generateMockTwoNextMonthInDays,
+  generateTwoNextMonthInDays,
+} from "../utils/generateTwoNextMonthInDays";
 import { getTodayDate } from "../utils/getTodayDate";
 
 interface IHabitsContextState {
   habits: IHabit[];
   habit?: IHabit;
+  getAllHabits: () => void;
   getHabit: (id: string) => void;
   onCreateHabit: (habit: TNewHabit) => void;
   onUpdateHabits: () => void;
@@ -30,6 +34,7 @@ interface IHabitsContextState {
 
 const initialState: IHabitsContextState = {
   habits: [],
+  getAllHabits: () => {},
   getHabit: () => {},
   onCreateHabit: () => {},
   onUpdateHabits: () => {},
@@ -45,6 +50,8 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     getAllHabits();
+
+    // onUpdateHabits();
   }, []);
 
   const getAllHabits = async () => {
@@ -74,11 +81,12 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const onCreateHabit = async (habit: TNewHabit) => {
     const randomId = generateId();
-    const days = generateTwoNextMonthInDays();
-    const today = getTodayDate("DashedString") as string;
+    // const days = generateTwoNextMonthInDays();
+    const today = getTodayDate("SlashString") as string;
 
     //mocked days
-    // const mockDays = generateMockTwoNextMonthInDays();
+    const days = generateMockTwoNextMonthInDays();
+    console.log(days);
 
     const newHabit: IHabit = {
       id: randomId,
@@ -102,16 +110,12 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const onUpdateHabits = async () => {
-    if (!state.habits.length) {
-      console.log("No habits there");
-    } else {
-      try {
-        await updateHabitsData(state.habits);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        getAllHabits();
-      }
+    try {
+      await updateHabitsData(state.habits);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllHabits();
     }
   };
 
@@ -136,22 +140,19 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const onDeleteAllHabits = async () => {
-    if (state.habits) {
-      try {
-        await removeAllHabitsData();
-      } catch (error) {
-        console.error(error);
-      } finally {
-        getAllHabits();
-      }
-    } else {
-      console.log("No habits there.");
+    try {
+      await removeAllHabitsData();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllHabits();
     }
   };
 
-  const userState: IHabitsContextState = {
+  const habitState: IHabitsContextState = {
     habits: state.habits,
     habit: state.habit,
+    getAllHabits,
     getHabit,
     onCreateHabit,
     onUpdateHabits,
@@ -161,7 +162,7 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <HabitsContext.Provider value={userState}>
+    <HabitsContext.Provider value={habitState}>
       {children}
     </HabitsContext.Provider>
   );

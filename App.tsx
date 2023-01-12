@@ -1,6 +1,8 @@
 import { useFonts } from "expo-font";
+import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useHabitsContext } from "./src/hooks/useHabitsContext";
 import RootNavigator from "./src/navigation/RootNavigator";
 import HabitsProvider from "./src/providers/HabitsProvider";
 import ThemeProvider from "./src/providers/ThemeProvider";
@@ -13,7 +15,6 @@ const customFonts = {
 
 export default function App() {
   const [fontsLoaded] = useFonts(customFonts);
-
   if (!fontsLoaded) {
     return null;
   }
