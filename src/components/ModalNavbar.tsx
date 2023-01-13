@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SvgXml } from "react-native-svg";
 import { SystemIcons } from "../assets/icons/icons";
 import { useTheme } from "../hooks/useTheme";
+import { useThemeMode } from "../hooks/useThemeMode";
 import { Block, Button, Text } from "./index";
 
 interface IModalNavbarProps {
@@ -16,6 +17,7 @@ const ModalNavbar = ({
   onPressClose,
 }: IModalNavbarProps) => {
   const { colors } = useTheme();
+  const { mode } = useThemeMode();
   const [counterWidth, setCounterWidth] = useState<number>(0);
 
   return (
@@ -29,7 +31,11 @@ const ModalNavbar = ({
       >
         <Block style={{ width: counterWidth }} />
 
-        {title && <Text h4>{title}</Text>}
+        {title && (
+          <Text h4 color={colors[mode].text}>
+            {title}
+          </Text>
+        )}
 
         <Button
           hitSlopArea
@@ -40,7 +46,7 @@ const ModalNavbar = ({
             setCounterWidth(width);
           }}
         >
-          <SvgXml color={colors.black} xml={SystemIcons["xMark"]} />
+          <SvgXml color={colors[mode].icon} xml={SystemIcons["xMark"]} />
         </Button>
       </Block>
 

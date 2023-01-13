@@ -1,7 +1,6 @@
 import React, { createContext, PropsWithChildren, useState } from "react";
 import { ITheme, THEME } from "../constants/theme";
-
-type TThemeMode = "light" | "dark";
+import { TThemeMode } from "../types/themeMode";
 
 interface IThemeContextState {
   mode: TThemeMode;

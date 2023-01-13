@@ -1,17 +1,23 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
-import { TColorMode } from "../types/colorMode";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from "react";
+import { getUserData } from "../storage/user";
 import { TLanguage } from "../types/lang";
+import { TThemeMode } from "../types/themeMode";
 
 interface IUserContextState {
-  colorMode: TColorMode;
+  themeMode: TThemeMode;
   language: TLanguage;
   notifications: boolean;
-  onChangeMode: (colorMode: TColorMode) => void;
+  onChangeMode: (colorMode: TThemeMode) => void;
   onChangeLang: (lang: TLanguage) => void;
 }
 
 const initialState: IUserContextState = {
-  colorMode: "Auto",
+  themeMode: "light",
   language: "EN",
   notifications: false,
   onChangeMode: () => {},
@@ -23,7 +29,27 @@ export const UserContext = createContext<IUserContextState>(initialState);
 const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [state, setState] = useState<IUserContextState>(initialState);
 
-  const onChangeMode = (colorMode: TColorMode) => {
+  useEffect(() => {
+    const retriveUserData = async () => {
+      try {
+        const userData = await getUserData();
+
+        userData !== null &&
+          setState((prevState) => ({
+            ...prevState,
+            themeMode: userData.themeMode,
+            language: userData.language,
+            notifications: userData.notification,
+          }));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    retriveUserData();
+  }, []);
+
+  const onChangeMode = (colorMode: TThemeMode) => {
     setState((prevState) => ({ ...prevState, colorMode }));
   };
 
@@ -32,7 +58,7 @@ const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const userState: IUserContextState = {
-    colorMode: state.colorMode,
+    themeMode: state.themeMode,
     language: state.language,
     notifications: state.notifications,
     onChangeMode,

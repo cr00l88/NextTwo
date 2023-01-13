@@ -21,7 +21,7 @@ interface IBlockProps extends ViewProps, ScrollViewProps {
   row?: boolean;
   shadow?: boolean;
   modal?: boolean;
-  color?: ViewStyle["backgroundColor"];
+  color?: string;
   align?: ViewStyle["alignItems"];
   justify?: ViewStyle["justifyContent"];
   margin?: ViewStyle["margin"];

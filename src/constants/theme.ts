@@ -48,6 +48,7 @@ export interface ILetterSpacing {
 interface IThemeModeColors {
   text: string;
   desc: string;
+  icon: string;
   bg: string;
 }
 
@@ -129,12 +130,14 @@ const LETTER_SPACING: ILetterSpacing = {
 const LIGHT_MODE: IThemeModeColors = {
   text: "#090909",
   desc: "#A3A3A3",
+  icon: "#090909",
   bg: "#FFFFFF",
 };
 
 const DARK_MODE: IThemeModeColors = {
   text: "#FFFFFF",
   desc: "#B7B1B1",
+  icon: "#FFFFFF",
   bg: "#090909",
 };
 

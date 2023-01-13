@@ -6,6 +6,12 @@ import { useState } from "react";
 import SettingRow from "../components/SettingRow";
 import ModalNavbar from "../components/ModalNavbar";
 import { useThemeMode } from "../hooks/useThemeMode";
+import Reanimated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   navigation,
@@ -15,8 +21,40 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   const { colors, sizes } = useTheme();
   const { mode, onChangeMode } = useThemeMode();
 
+  const progress = useDerivedValue(() => {
+    return mode === "dark" ? withTiming(1) : withTiming(0);
+  }, [mode]);
+
+  const rStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [colors.light.bg, colors.dark.bg]
+    );
+
+    return { backgroundColor };
+  });
+
+  const rTextStyle = useAnimatedStyle(() => {
+    const color = interpolateColor(
+      progress.value,
+      [0, 1],
+      [colors.light.text, colors.dark.text]
+    );
+
+    return { color };
+  });
+
   return (
-    <Block flex={1} color={colors[mode].bg}>
+    <Reanimated.View
+      style={[
+        {
+          flex: 1,
+          backgroundColor: mode === "light" ? colors.light.bg : colors.dark.bg,
+        },
+        rStyle,
+      ]}
+    >
       <ModalNavbar title="Settings" onPressClose={() => navigation.goBack()} />
       <Block paddingHorizontal={sizes.padding}>
         <SettingRow
@@ -25,10 +63,7 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           icon="darkMode"
         >
           <Toggle
-            onPress={() => {
-              onChangeMode(mode === "dark" ? "light" : "dark");
-              console.log(mode);
-            }}
+            onPress={() => onChangeMode(mode === "dark" ? "light" : "dark")}
             initialState={mode === "dark" ? true : false}
           />
         </SettingRow>
@@ -49,7 +84,10 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           icon="flag"
         >
           <Block row align="center">
-            <Text h4>EN</Text>
+            <AnimatedText h4 style={rTextStyle}>
+              EN
+            </AnimatedText>
+            {/* <Text h4>EN</Text> */}
             <Icon icon="arrowRight" color={colors.gray} />
           </Block>
         </SettingRow>
@@ -68,8 +106,10 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           </Button>
         </SettingRow>
       </Block>
-    </Block>
+    </Reanimated.View>
   );
 };
+
+const AnimatedText = Reanimated.createAnimatedComponent(Text);
 
 export default SettingsScreen;
