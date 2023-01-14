@@ -64,7 +64,7 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
         >
           <Toggle
             onPress={() => onChangeMode(mode === "dark" ? "light" : "dark")}
-            initialState={mode === "dark" ? true : false}
+            initialState={mode === "dark"}
           />
         </SettingRow>
         <SettingRow
@@ -84,9 +84,9 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           icon="flag"
         >
           <Block row align="center">
-            <AnimatedText h4 style={rTextStyle}>
+            <Text animated h4 style={rTextStyle}>
               EN
-            </AnimatedText>
+            </Text>
             {/* <Text h4>EN</Text> */}
             <Icon icon="arrowRight" color={colors.gray} />
           </Block>
@@ -110,6 +110,6 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   );
 };
 
-const AnimatedText = Reanimated.createAnimatedComponent(Text);
+// const AnimatedText = Reanimated.createAnimatedComponent(Text);
 
 export default SettingsScreen;

@@ -4,9 +4,10 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { getUserData } from "../storage/user";
+import { getUserData, storeUserData } from "../storage/user";
 import { TLanguage } from "../types/lang";
 import { TThemeMode } from "../types/themeMode";
+import { IUserData } from "../types/userData";
 
 interface IUserContextState {
   themeMode: TThemeMode;
@@ -29,25 +30,28 @@ export const UserContext = createContext<IUserContextState>(initialState);
 const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [state, setState] = useState<IUserContextState>(initialState);
 
-  useEffect(() => {
-    const retriveUserData = async () => {
-      try {
-        const userData = await getUserData();
+  const updateUserState = (user: IUserData) => {
+    setState((prevState) => ({
+      ...prevState,
+      themeMode: user.themeMode,
+      language: user.language,
+      notifications: user.notifications,
+    }));
+  };
 
-        userData !== null &&
-          setState((prevState) => ({
-            ...prevState,
-            themeMode: userData.themeMode,
-            language: userData.language,
-            notifications: userData.notification,
-          }));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    retriveUserData();
-  }, []);
+  // const readUserData = async () => {
+  //   try {
+  //     const userData = await getUserData();
+  //     if (userData !== null) {
+  //       updateUserState(userData);
+  //     } else {
+  //       await storeUserData(initialState);
+  //       updateUserState(initialState);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const onChangeMode = (colorMode: TThemeMode) => {
     setState((prevState) => ({ ...prevState, colorMode }));

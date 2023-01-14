@@ -2,6 +2,7 @@ import React from "react";
 import { SvgXml } from "react-native-svg";
 import { Icons } from "../assets/icons/icons";
 import { useTheme } from "../hooks/useTheme";
+import { useThemeMode } from "../hooks/useThemeMode";
 import { Block, Button } from "./index";
 
 interface IHomeNavbarProps {
@@ -11,6 +12,7 @@ interface IHomeNavbarProps {
 
 const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
   const { colors } = useTheme();
+  const { mode } = useThemeMode();
   return (
     <Block
       row
@@ -29,7 +31,7 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
         <SvgXml color={colors.black} xml={Icons["settings"]} />
       </Button>
 
-      <SvgXml color={colors.black} xml={Icons["logo"]} />
+      <SvgXml color={colors[mode].text} xml={Icons["logo"]} />
 
       <Button
         // hitSlopArea

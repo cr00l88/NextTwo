@@ -111,7 +111,8 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const onUpdateHabits = async () => {
     try {
-      await updateHabitsData(state.habits);
+      const habits = await getHabitsData();
+      await updateHabitsData(habits);
     } catch (error) {
       console.error(error);
     } finally {

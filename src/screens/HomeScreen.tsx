@@ -6,12 +6,16 @@ import HomeNavbar from "../components/HomeNavbar";
 import HabitRow from "../components/HabitRow";
 import { FlatList } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
+import { useThemeMode } from "../hooks/useThemeMode";
+import { useTheme } from "../hooks/useTheme";
 
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
 }) => {
   const { habits, getAllHabits, getHabit, onDeleteAllHabits, onUpdateHabits } =
     useHabitsContext();
+  const { colors } = useTheme();
+  const { mode } = useThemeMode();
 
   const renderItem = ({ item }) => (
     <HabitRow
@@ -31,7 +35,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   };
 
   return (
-    <Block safe flex={1} color={"white"}>
+    <Block safe flex={1} color={colors[mode].bg}>
       <HomeNavbar
         onPressSettings={() => navigation.navigate("SettingsScreen")}
         onPressCreate={() => navigation.navigate("CreateHabitScreen")}
@@ -76,6 +80,19 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
           onPress={() => onUpdateHabits()}
         >
           <Text color="white">Check</Text>
+        </Button>
+
+        <Button
+          hitSlopArea
+          center
+          color="#D2691E"
+          radius={4}
+          paddingVertical={8}
+          paddingHorizontal={16}
+          marginVertical={8}
+          onPress={() => onUpdateHabits()}
+        >
+          <Text color="white">Print update haits result</Text>
         </Button>
 
         <FlatList

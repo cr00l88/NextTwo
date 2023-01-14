@@ -1,11 +1,13 @@
 import React, { memo } from "react";
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from "react-native";
+import Animated from "react-native-reanimated";
 import { useTheme } from "../hooks/useTheme";
 
 // type TTextStyleProps = Pick<TextStyle, "color">;
 
 interface ITextProps extends TextStyle {
   children?: React.ReactNode;
+  animated?: boolean;
   h1?: boolean;
   h2?: boolean;
   h3?: boolean;
@@ -36,6 +38,7 @@ interface ITextProps extends TextStyle {
 
 const Text = ({
   children,
+  animated,
   h1,
   h2,
   h3,
@@ -120,6 +123,14 @@ const Text = ({
     paddingVertical !== undefined && { paddingVertical },
     style,
   ]) as TextStyle;
+
+  if (animated) {
+    return (
+      <Animated.Text style={textStyle} {...props}>
+        {children}
+      </Animated.Text>
+    );
+  }
 
   return (
     <RNText style={textStyle} {...props}>

@@ -9,10 +9,18 @@ import HabitDetailsScreen from "../screens/HabitDetailsScreen";
 import HabitActionSheetModal from "../screens/HabitActionSheetModal";
 import SelectHabitIconModal from "../screens/SelectHabitIconModal";
 import PomodoroScreen from "../screens/PomodoroScreen";
+import { useEffect } from "react";
+import { useHabitsContext } from "../hooks/useHabitsContext";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
 const RootNavigator = () => {
+  const { onUpdateHabits } = useHabitsContext();
+
+  useEffect(() => {
+    onUpdateHabits();
+  }, []);
+
   return (
     <NavigationContainer>
       <RootStack.Navigator>

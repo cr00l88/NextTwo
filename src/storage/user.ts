@@ -1,14 +1,9 @@
-import { TLanguage } from "../types/lang";
+import { useUserContext } from "../hooks/useUserContext";
 import { TThemeMode } from "../types/themeMode";
+import { IUserData } from "../types/userData";
 import { getJSONData, storeJSONData } from "./storage";
 
 const KEY = "@user";
-
-interface IUserData {
-  themeMode: TThemeMode;
-  language: TLanguage;
-  notification: boolean;
-}
 
 export const storeUserData = async (user: IUserData) => {
   try {
@@ -26,6 +21,20 @@ export const getUserData = async () => {
     } else {
       return null;
     }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const storeUserThemeMode = async (newMode: TThemeMode) => {
+  try {
+    const { language, notifications } = useUserContext();
+
+    await storeUserData({
+      themeMode: newMode,
+      language,
+      notifications,
+    });
   } catch (error) {
     console.error(error);
   }
