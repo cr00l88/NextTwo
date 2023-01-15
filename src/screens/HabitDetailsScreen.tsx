@@ -1,15 +1,18 @@
+import { useState } from "react";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button, Icon } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useTheme } from "../hooks/useTheme";
 import ModalNavbar from "../components/ModalNavbar";
-import { useState } from "react";
+
+import { useThemeMode } from "../hooks/useThemeMode";
 
 const HabitDetailsScreen: React.FC<
   RootStackScreenProps<"HabitDetailsScreen">
 > = ({ navigation, route }) => {
   const { id } = route.params;
   const { colors } = useTheme();
+  const { mode } = useThemeMode();
   const { habit, onMarkDoneToday } = useHabitsContext();
   const [isMarkDone, setMarkDone] = useState<boolean>(false);
 
@@ -28,7 +31,7 @@ const HabitDetailsScreen: React.FC<
   );
 
   return (
-    <Block flex={1} color="white">
+    <Block flex={1} color={colors[mode].bg}>
       <ModalNavbar
         showSeperator={false}
         onPressClose={() => navigation.goBack()}
@@ -83,6 +86,26 @@ const HabitDetailsScreen: React.FC<
         >
           <Text color={"white"}>Print habit</Text>
         </Button>
+
+        <Block
+          flex={1}
+          scroll
+          style={{ flexWrap: "wrap", backgroundColor: "yellow" }}
+        >
+          {habit.days.map((day) => (
+            <Block
+              key={day.id}
+              style={{
+                width: 24,
+                height: 32,
+                backgroundColor: "red",
+                margin: 2,
+              }}
+            >
+              <Text>{day.id}</Text>
+            </Block>
+          ))}
+        </Block>
       </Block>
     </Block>
   );

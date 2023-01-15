@@ -3,9 +3,19 @@ import { StyleProp, StyleSheet, Text as RNText, TextStyle } from "react-native";
 import Animated from "react-native-reanimated";
 import { useTheme } from "../hooks/useTheme";
 
-// type TTextStyleProps = Pick<TextStyle, "color">;
+type TTextStyleProps = Pick<
+  TextStyle,
+  | "color"
+  | "margin"
+  | "marginTop"
+  | "marginBottom"
+  | "marginLeft"
+  | "marginRight"
+  | "marginHorizontal"
+  | "marginVertical"
+>;
 
-interface ITextProps extends TextStyle {
+interface ITextProps extends TextStyle, TTextStyleProps {
   children?: React.ReactNode;
   animated?: boolean;
   h1?: boolean;
@@ -17,15 +27,7 @@ interface ITextProps extends TextStyle {
   p?: boolean;
   size?: TextStyle["fontSize"];
   weight?: TextStyle["fontWeight"];
-  color?: TextStyle["color"];
   align?: TextStyle["textAlign"];
-  margin?: TextStyle["margin"];
-  marginTop?: TextStyle["marginTop"];
-  marginBottom?: TextStyle["marginBottom"];
-  marginLeft?: TextStyle["marginLeft"];
-  marginRight?: TextStyle["marginRight"];
-  marginHorizontal?: TextStyle["marginHorizontal"];
-  marginVertical?: TextStyle["marginVertical"];
   padding?: TextStyle["padding"];
   paddingTop?: TextStyle["paddingTop"];
   paddingBottom?: TextStyle["paddingBottom"];

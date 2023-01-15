@@ -12,6 +12,7 @@ import Reanimated, {
   useDerivedValue,
   withTiming,
 } from "react-native-reanimated";
+import { Switch } from "react-native";
 
 const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   navigation,
@@ -62,9 +63,14 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           desc={`Let your eyes restand turn it\non`}
           icon="darkMode"
         >
-          <Toggle
-            onPress={() => onChangeMode(mode === "dark" ? "light" : "dark")}
-            initialState={mode === "dark"}
+          <Switch
+            trackColor={{ false: colors.light.desc, true: colors.white }}
+            thumbColor={mode === "dark" ? colors.black : "#f4f3f4"}
+            ios_backgroundColor={colors.light.desc}
+            onValueChange={() =>
+              onChangeMode(mode === "dark" ? "light" : "dark")
+            }
+            value={mode === "dark"}
           />
         </SettingRow>
         <SettingRow
@@ -72,9 +78,15 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           desc={`We will notify you to take\nthe action`}
           icon="notification"
         >
-          <Toggle
-            onPress={() => setNotify(!isNotify)}
-            initialState={isNotify}
+          <Switch
+            trackColor={{
+              false: colors.light.desc,
+              true: mode === "dark" ? colors.white : colors.black,
+            }}
+            thumbColor={mode === "dark" ? colors.black : "#f4f3f4"}
+            ios_backgroundColor={colors.light.desc}
+            onValueChange={() => setNotify(!isNotify)}
+            value={isNotify}
           />
         </SettingRow>
 

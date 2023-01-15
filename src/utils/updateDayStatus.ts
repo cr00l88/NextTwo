@@ -11,6 +11,8 @@ export const updateDayStatus = (
     case "SAME":
       if (status !== "TODAY_SUCCESS") {
         return "TODAY_TODO";
+      } else {
+        return "TODAY_SUCCESS";
       }
     case "PAST":
       if (status === "TODAY_TODO" || status === "NEXT") {
