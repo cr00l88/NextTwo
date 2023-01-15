@@ -11,11 +11,16 @@ import SelectHabitIconModal from "../screens/SelectHabitIconModal";
 import PomodoroScreen from "../screens/PomodoroScreen";
 import { useEffect } from "react";
 import { useHabitsContext } from "../hooks/useHabitsContext";
+import { useThemeMode } from "../hooks/useThemeMode";
+import { StatusBar } from "react-native";
+import { useTheme } from "../hooks/useTheme";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
 const RootNavigator = () => {
   const { onUpdateHabits } = useHabitsContext();
+  const { mode } = useThemeMode();
+  const { colors } = useTheme();
 
   useEffect(() => {
     onUpdateHabits();
@@ -23,6 +28,11 @@ const RootNavigator = () => {
 
   return (
     <NavigationContainer>
+      <StatusBar
+        animated={true}
+        backgroundColor={mode === "light" ? colors.light.bg : colors.dark.bg}
+        barStyle={mode === "light" ? "dark-content" : "light-content"}
+      />
       <RootStack.Navigator>
         <RootStack.Screen
           name="HomeScreen"
