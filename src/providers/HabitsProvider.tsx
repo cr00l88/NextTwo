@@ -26,10 +26,10 @@ interface IHabitsContextState {
   getAllHabits: () => void;
   getHabit: (id: string) => void;
   onCreateHabit: (habit: TNewHabit) => void;
-  onUpdateHabits: () => void;
   onMarkDoneToday: (id: string) => void;
   onDeleteHabit: (id: string) => void;
   onDeleteAllHabits: () => void;
+  onStartHabits: () => void;
 }
 
 const initialState: IHabitsContextState = {
@@ -37,10 +37,11 @@ const initialState: IHabitsContextState = {
   getAllHabits: () => {},
   getHabit: () => {},
   onCreateHabit: () => {},
-  onUpdateHabits: () => {},
+
   onMarkDoneToday: () => {},
   onDeleteHabit: () => {},
   onDeleteAllHabits: () => {},
+  onStartHabits: () => {},
 };
 
 export const HabitsContext = createContext<IHabitsContextState>(initialState);
@@ -81,12 +82,12 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const onCreateHabit = async (habit: TNewHabit) => {
     const randomId = generateId();
-    // const days = generateTwoNextMonthInDays();
+    const days = generateTwoNextMonthInDays();
     const today = getTodayDate("SlashString") as string;
 
     //mocked days
-    const days = generateMockTwoNextMonthInDays();
-    console.log(days);
+    // const days = generateMockTwoNextMonthInDays();
+    // console.log(days);
 
     const newHabit: IHabit = {
       id: randomId,
@@ -102,17 +103,6 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     try {
       await storeNewHabitData(newHabit);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      getAllHabits();
-    }
-  };
-
-  const onUpdateHabits = async () => {
-    try {
-      const habits = await getHabitsData();
-      await updateHabitsData(habits);
     } catch (error) {
       console.error(error);
     } finally {
@@ -150,16 +140,27 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const onStartHabits = async () => {
+    try {
+      const habits = await getHabitsData();
+      await updateHabitsData(habits);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllHabits();
+    }
+  };
+
   const habitState: IHabitsContextState = {
     habits: state.habits,
     habit: state.habit,
     getAllHabits,
     getHabit,
     onCreateHabit,
-    onUpdateHabits,
     onMarkDoneToday,
     onDeleteHabit,
     onDeleteAllHabits,
+    onStartHabits,
   };
 
   return (
