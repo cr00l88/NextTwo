@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
@@ -15,6 +15,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   const { habits, getHabit } = useHabitsContext();
   const { colors } = useTheme();
   const { mode } = useThemeMode();
+  const [showSeparator, setShowSeparator] = useState<boolean>(false);
 
   const renderItem = ({ item }) => (
     <HabitRow
@@ -39,7 +40,11 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         onPressSettings={() => navigation.navigate("SettingsScreen")}
         onPressCreate={() => navigation.navigate("CreateHabitScreen")}
       />
-      <Block paddingHorizontal={16}>
+      {showSeparator && mode === "light" && (
+        <Block color={colors.lightGray} style={{ height: 1, width: "100%" }} />
+      )}
+
+      <Block>
         {/* <PrimaryButton
           title="Go to pomodore"
           onPress={() => navigation.navigate("PomodoroScreen", { id: "1234" })}
@@ -49,12 +54,21 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
           data={habits}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingBottom: 64 }}
+          contentContainerStyle={{
+            paddingTop: 8,
+            paddingHorizontal: 12,
+            paddingBottom: 64,
+          }}
           ListEmptyComponent={() => (
             <Text h4 margin={8} color="gray" align="center">
               No habit here
             </Text>
           )}
+          scrollEventThrottle={16}
+          onScroll={(event) => {
+            const offset = event.nativeEvent.contentOffset.y;
+            setShowSeparator(offset > 12);
+          }}
         />
       </Block>
     </Block>
