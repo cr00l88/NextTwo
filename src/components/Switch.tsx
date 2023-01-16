@@ -14,7 +14,10 @@ const Switch = ({ value, onValueChange }: ISwitchProps) => {
 
   return (
     <RNSwitch
-      trackColor={{ false: colors.light.desc, true: colors.white }}
+      trackColor={{
+        false: colors.light.desc,
+        true: mode === "dark" ? colors.white : colors.black,
+      }}
       thumbColor={mode === "dark" ? colors.black : "#f4f3f4"}
       ios_backgroundColor={colors.light.desc}
       onValueChange={onValueChange}
