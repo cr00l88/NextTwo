@@ -49,19 +49,20 @@ interface IThemeModeColors {
   text: string;
   desc: string;
   icon: string;
+  frame: string;
   bg: string;
 }
 
 export interface IColors {
   // black: ColorValue;
-  black: ColorValue;
-  white: ColorValue;
-  lightGray: ColorValue;
-  gray: ColorValue;
-  text: ColorValue;
-  success: ColorValue;
-  warining: ColorValue;
-  error: ColorValue;
+  black: string;
+  white: string;
+  lightGray: string;
+  gray: string;
+  text: string;
+  success: string;
+  warining: string;
+  error: string;
   light: IThemeModeColors;
   dark: IThemeModeColors;
 }
@@ -131,6 +132,7 @@ const LIGHT_MODE: IThemeModeColors = {
   text: "#090909",
   desc: "#A3A3A3",
   icon: "#090909",
+  frame: "#FFFFFF",
   bg: "#FFFFFF",
 };
 
@@ -138,6 +140,7 @@ const DARK_MODE: IThemeModeColors = {
   text: "#FFFFFF",
   desc: "#B7B1B1",
   icon: "#FFFFFF",
+  frame: "#272727",
   bg: "#090909",
 };
 

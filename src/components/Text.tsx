@@ -5,7 +5,6 @@ import { useTheme } from "../hooks/useTheme";
 
 type TTextStyleProps = Pick<
   TextStyle,
-  | "color"
   | "margin"
   | "marginTop"
   | "marginBottom"
@@ -27,6 +26,7 @@ interface ITextProps extends TextStyle, TTextStyleProps {
   p?: boolean;
   size?: TextStyle["fontSize"];
   weight?: TextStyle["fontWeight"];
+  color?: string;
   align?: TextStyle["textAlign"];
   padding?: TextStyle["padding"];
   paddingTop?: TextStyle["paddingTop"];
@@ -107,7 +107,7 @@ const Text = ({
 
     size !== undefined && { fontSize: size },
     weight === undefined && { fontWeight: weight },
-    color !== undefined && { color },
+    color !== undefined && { color: color },
     align !== undefined && { textAlign: align },
     margin !== undefined && { margin },
     marginTop !== undefined && { marginTop },

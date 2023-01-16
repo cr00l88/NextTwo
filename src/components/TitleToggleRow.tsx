@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../hooks/useTheme";
-import { Block, Text, Toggle } from "./index";
+import { useThemeMode } from "../hooks/useThemeMode";
+import { Block, Text, Switch } from "./index";
 
 interface ITitleToggleRowProps {
   title: string;
@@ -13,12 +14,15 @@ const TitleToggleRow = ({
   initialState,
   onPress,
 }: ITitleToggleRowProps) => {
-  const { sizes } = useTheme();
+  const { sizes, colors } = useTheme();
+  const { mode } = useThemeMode();
 
   return (
     <Block marginVertical={sizes.sm} justify="space-between" align="center" row>
-      <Text title>{title}</Text>
-      <Toggle initialState={initialState} onPress={onPress} />
+      <Text title color={colors[mode].text}>
+        {title}
+      </Text>
+      <Switch onValueChange={onPress} value={initialState} />
     </Block>
   );
 };

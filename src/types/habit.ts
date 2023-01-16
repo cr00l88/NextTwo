@@ -20,6 +20,6 @@ export interface IHabit {
 export type TNewHabit = Pick<
   IHabit,
   "name" | "desc" | "icon" | "pomodore" | "pomodoreTime" | "notification"
->;
+> & { nameError: boolean };
 
 export type THabitRow = Pick<IHabit, "id" | "name" | "desc" | "icon" | "days">;

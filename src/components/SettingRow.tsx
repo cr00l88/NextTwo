@@ -23,7 +23,7 @@ const SettingRow = ({ children, icon, title, desc }: ISettingRowProps) => {
           <Text title color={colors[mode].text}>
             {title}
           </Text>
-          <Text p color={colors[mode].desc}>
+          <Text p color={colors[mode].desc} style={{ flexShrink: 1 }}>
             {desc}
           </Text>
         </Block>

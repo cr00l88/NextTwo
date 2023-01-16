@@ -5,6 +5,7 @@ import { THabitRow } from "../types/habit";
 import IconButton from "./IconButton";
 import DayCell from "./DayCell";
 import { useTheme } from "../hooks/useTheme";
+import { useThemeMode } from "../hooks/useThemeMode";
 
 interface IHabitRowProps {
   habit: THabitRow;
@@ -18,11 +19,18 @@ const HabitRow = ({
   onPressMoreOptions,
 }: IHabitRowProps) => {
   const { colors, sizes } = useTheme();
+  const { mode } = useThemeMode();
   const renderItem = ({ item }) => <DayCell status={item.status} />;
 
   return (
     <Button onPress={onPressRow}>
-      <Block color={"white"} border shadow padding={16} marginVertical={4}>
+      <Block
+        color={colors[mode].frame}
+        border={mode === "light" ? true : undefined}
+        shadow
+        padding={16}
+        marginVertical={4}
+      >
         <Block row align="center" marginBottom={10}>
           {habit.icon !== "none" && (
             <Block
@@ -37,9 +45,11 @@ const HabitRow = ({
             </Block>
           )}
           <Block>
-            <Text h4>{habit.name}</Text>
+            <Text h4 color={colors[mode].text}>
+              {habit.name}
+            </Text>
             {habit.desc && (
-              <Text p color={colors.gray}>
+              <Text p color={colors[mode].desc}>
                 {habit.desc}
               </Text>
             )}

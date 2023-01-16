@@ -12,8 +12,7 @@ import { useTheme } from "../hooks/useTheme";
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
 }) => {
-  const { habits, getAllHabits, getHabit, onDeleteAllHabits, onUpdateHabits } =
-    useHabitsContext();
+  const { habits, getHabit } = useHabitsContext();
   const { colors } = useTheme();
   const { mode } = useThemeMode();
 
@@ -41,64 +40,16 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         onPressCreate={() => navigation.navigate("CreateHabitScreen")}
       />
       <Block paddingHorizontal={16}>
-        <Button
-          hitSlopArea
-          color="black"
-          radius={4}
-          paddingVertical={8}
-          paddingHorizontal={16}
-          marginVertical={8}
+        {/* <PrimaryButton
+          title="Go to pomodore"
           onPress={() => navigation.navigate("PomodoroScreen", { id: "1234" })}
-        >
-          <Text body color="white" align="center">
-            Go to pomodore
-          </Text>
-        </Button>
-
-        <Button
-          hitSlopArea
-          color="crimson"
-          radius={4}
-          paddingVertical={8}
-          paddingHorizontal={16}
-          marginVertical={8}
-          onPress={() => onDeleteAllHabits()}
-        >
-          <Text color="white" align="center">
-            Delete all habits
-          </Text>
-        </Button>
-
-        <Button
-          hitSlopArea
-          center
-          color="#D2691E"
-          radius={4}
-          paddingVertical={8}
-          paddingHorizontal={16}
-          marginVertical={8}
-          onPress={() => onUpdateHabits()}
-        >
-          <Text color="white">Check</Text>
-        </Button>
-
-        <Button
-          hitSlopArea
-          center
-          color="#D2691E"
-          radius={4}
-          paddingVertical={8}
-          paddingHorizontal={16}
-          marginVertical={8}
-          onPress={() => onUpdateHabits()}
-        >
-          <Text color="white">Print update haits result</Text>
-        </Button>
+        /> */}
 
         <FlatList
           data={habits}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingBottom: 64 }}
           ListEmptyComponent={() => (
             <Text h4 margin={8} color="gray" align="center">
               No habit here

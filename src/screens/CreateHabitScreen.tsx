@@ -1,7 +1,7 @@
 import { useReducer, useState } from "react";
 import { Pressable } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
-import { Block, Text, Button, Input, Icon } from "../components";
+import { Block, Text, Button, Input } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import TitleToggleRow from "../components/TitleToggleRow";
 import PrimaryButton from "../components/PrimaryButton";
@@ -11,12 +11,12 @@ import {
   TCreateHabitFormUpdateType,
   TCreateHabitFormToggleType,
 } from "../reducers/createHabitFormReducer";
-
 import { useTheme } from "../hooks/useTheme";
 import ModalNavbar from "../components/ModalNavbar";
 import SelectHabitIconModal from "./SelectHabitIconModal";
 import { THabitIconType } from "../assets/icons/icons";
 import AddHabitIconButton from "../components/AddHabitIconButton";
+import { useThemeMode } from "../hooks/useThemeMode";
 
 const POMODORE_OPTIONS = ["15", "30", "60", "120"];
 
@@ -25,6 +25,7 @@ const CreateHabitScreen: React.FC<
 > = ({ navigation }) => {
   const { onCreateHabit } = useHabitsContext();
   const { colors, sizes } = useTheme();
+  const { mode } = useThemeMode();
   const [formState, formDispatch] = useReducer(
     createHabitFormReducer,
     createHabitFormInitialState
@@ -70,11 +71,22 @@ const CreateHabitScreen: React.FC<
     });
   };
 
+  const onError = (type: "SET_ERROR" | "CLEAR_ERROR") => {
+    formDispatch({
+      type,
+      payload: {
+        key: "nameError",
+      },
+    });
+  };
+
   const onCreateNewHabit = () => {
     if (formState.name) {
       onCreateHabit(formState);
 
       navigation.goBack();
+    } else {
+      onError("SET_ERROR");
     }
   };
 
@@ -102,7 +114,7 @@ const CreateHabitScreen: React.FC<
     ));
 
   return (
-    <Block flex={1} color="white">
+    <Block flex={1} color={colors[mode].bg}>
       <ModalNavbar
         title="Create a new habit"
         onPressClose={() => navigation.goBack()}
@@ -115,18 +127,32 @@ const CreateHabitScreen: React.FC<
         />
 
         <Block marginVertical={sizes.md}>
-          <Text body>Name</Text>
+          <Text
+            body
+            color={formState.nameError ? colors.error : colors[mode].text}
+          >
+            Name
+          </Text>
           <Input
             value={formState.name}
             placeholder="Enter habit name"
             placeholderTextColor={colors.lightGray}
             fontSize={24}
             marginVertical={8}
-            onChangeText={(text) => onChange("name", text)}
+            onChangeText={(text) => {
+              onChange("name", text);
+              onError("CLEAR_ERROR");
+            }}
+            onFocus={() => onError("CLEAR_ERROR")}
           />
         </Block>
+        {formState.nameError && (
+          <Text color={colors.error}>You have to fill this form</Text>
+        )}
         <Block>
-          <Text body>Description</Text>
+          <Text body color={colors[mode].text}>
+            Description
+          </Text>
           <Input
             placeholder="Optional"
             placeholderTextColor={colors.lightGray}

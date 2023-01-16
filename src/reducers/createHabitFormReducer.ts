@@ -36,6 +36,7 @@ type TCreateHabitFormAction =
 
 export const createHabitFormInitialState: TNewHabit = {
   name: "Working",
+  nameError: false,
   desc: "",
   icon: "none",
   pomodore: false,

@@ -23,7 +23,7 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
     >
       <Button
         // hitSlopArea
-        color={colors.lightGray}
+        color={mode === "light" ? colors.lightGray : colors.white}
         radius={4}
         padding={6}
         onPress={onPressSettings}
@@ -35,12 +35,15 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
 
       <Button
         // hitSlopArea
-        color={colors.black}
+        color={mode === "light" ? colors.black : colors.white}
         radius={4}
         padding={6}
         onPress={onPressCreate}
       >
-        <SvgXml color={colors.white} xml={Icons["createPlus"]} />
+        <SvgXml
+          color={mode === "light" ? colors.white : colors.black}
+          xml={Icons["createPlus"]}
+        />
       </Button>
     </Block>
   );
