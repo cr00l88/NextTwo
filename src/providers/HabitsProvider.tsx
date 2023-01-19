@@ -29,7 +29,7 @@ interface IHabitsContextState {
   onMarkDoneToday: (id: string) => void;
   onDeleteHabit: (id: string) => void;
   onDeleteAllHabits: () => void;
-  onStartHabits: () => void;
+  onLoadHabits: () => void;
 }
 
 const initialState: IHabitsContextState = {
@@ -41,7 +41,7 @@ const initialState: IHabitsContextState = {
   onMarkDoneToday: () => {},
   onDeleteHabit: () => {},
   onDeleteAllHabits: () => {},
-  onStartHabits: () => {},
+  onLoadHabits: () => {},
 };
 
 export const HabitsContext = createContext<IHabitsContextState>(initialState);
@@ -140,7 +140,7 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const onStartHabits = async () => {
+  const onLoadHabits = async () => {
     try {
       const habits = await getHabitsData();
       await updateHabitsData(habits);
@@ -160,7 +160,7 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
     onMarkDoneToday,
     onDeleteHabit,
     onDeleteAllHabits,
-    onStartHabits,
+    onLoadHabits,
   };
 
   return (
