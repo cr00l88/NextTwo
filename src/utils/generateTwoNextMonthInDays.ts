@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { IDay } from "../types/dayCell";
 
 export const generateTwoNextMonthInDays = (): IDay[] => {
@@ -20,15 +21,33 @@ export const generateTwoNextMonthInDays = (): IDay[] => {
   };
   days.push(firstDay);
 
-  for (let i = 1; i < 60; i++) {
-    const next = new Date(today.setDate(today.getDate() + 1));
-    const day = next.getDate();
-    const month = next.toLocaleString("default", { month: "numeric" });
-    const year = next.toLocaleString("default", { year: "numeric" });
+  if (Platform.OS === "android") {
+    for (let i = 1; i < 60; i++) {
+      const next = new Date(today.setDate(today.getDate() + 1));
+      const day = next.getDate();
+      const month = next.getMonth();
+      const year = next.getFullYear();
 
-    const date = `${year}/${month}/${day}`;
+      const date = `${year}/${month}/${day}`;
+      console.log(date);
 
-    days.push({ id: i, date, status: "NEXT" });
+      days.push({ id: i, date, status: "NEXT" });
+    }
+  } else {
+    for (let i = 1; i < 60; i++) {
+      const next = new Date(today.setDate(today.getDate() + 1));
+      const day = next.getDate();
+      // const month = next.toLocaleString("default", { month: "numeric" });
+      const month = next.getMonth() + 1;
+      // console.log("Month:", next.getMonth());
+      // const year = next.toLocaleString("default", { year: "numeric" });
+      const year = next.getFullYear();
+
+      const date = `${year}/${month}/${day}`;
+      console.log(date);
+
+      days.push({ id: i, date, status: "NEXT" });
+    }
   }
 
   return days;
