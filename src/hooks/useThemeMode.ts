@@ -11,5 +11,6 @@ export const useThemeMode = () => {
   return {
     mode: context.mode,
     onChangeMode: context.onChangeMode,
+    onLoadTheme: context.onLoadTheme,
   };
 };

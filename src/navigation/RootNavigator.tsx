@@ -18,12 +18,13 @@ import { useTheme } from "../hooks/useTheme";
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
 const RootNavigator = () => {
-  const { onStartHabits } = useHabitsContext();
-  const { mode } = useThemeMode();
+  const { onLoadHabits } = useHabitsContext();
+  const { mode, onLoadTheme } = useThemeMode();
   const { colors } = useTheme();
 
   useEffect(() => {
-    onStartHabits();
+    onLoadTheme();
+    onLoadHabits();
   }, []);
 
   return (
