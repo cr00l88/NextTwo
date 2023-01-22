@@ -2,18 +2,18 @@ import React from "react";
 import {
   StyleSheet,
   PressableProps,
-  TouchableOpacity,
-  TouchableOpacityProps,
   ViewStyle,
   StyleProp,
+  Pressable,
 } from "react-native";
 import { useTheme } from "../hooks/useTheme";
 
 type TViewStyleProps = Pick<ViewStyle, "width">;
 
-interface IButtonProps extends TouchableOpacityProps, TViewStyleProps {
+interface IButtonProps extends TViewStyleProps, PressableProps {
   children?: React.ReactNode;
   color?: ViewStyle["backgroundColor"];
+  colorPressed?: string;
   radius?: ViewStyle["borderRadius"];
   height?: ViewStyle["height"];
   margin?: ViewStyle["margin"];
@@ -39,6 +39,7 @@ interface IButtonProps extends TouchableOpacityProps, TViewStyleProps {
 const Button = ({
   children,
   color,
+  colorPressed,
   radius,
   height,
   width,
@@ -71,7 +72,6 @@ const Button = ({
     color !== undefined && { backgroundColor: color },
     radius !== undefined && { borderRadius: radius },
     height !== undefined && { height },
-
     margin !== undefined && { margin },
     marginTop !== undefined && { marginTop },
     marginBottom !== undefined && { marginBottom },
@@ -97,13 +97,24 @@ const Button = ({
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       // hitSlop={hitSlopArea !== undefined && hitSlop}
-      style={buttonStyle}
+      style={({ pressed }) => [
+        buttonStyle,
+        {
+          backgroundColor:
+            colorPressed === undefined ? color : pressed ? colorPressed : color,
+          // backgroundColor: pressed
+          //   ? colorPressed !== undefined
+          //     ? colorPressed
+          //     : color
+          //   : color,
+        },
+      ]}
       {...props}
     >
       {children}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

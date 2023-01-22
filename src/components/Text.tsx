@@ -88,7 +88,6 @@ const Text = ({
     },
     body !== undefined && {
       fontSize: sizes.body,
-
       lineHeight: sizes.body + 8,
       letterSpacing: -0.3,
     },

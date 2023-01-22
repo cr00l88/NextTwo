@@ -21,33 +21,14 @@ export const generateTwoNextMonthInDays = (): IDay[] => {
   };
   days.push(firstDay);
 
-  if (Platform.OS === "android") {
-    for (let i = 1; i < 60; i++) {
-      const next = new Date(today.setDate(today.getDate() + 1));
-      const day = next.getDate();
-      const month = next.getMonth();
-      const year = next.getFullYear();
+  for (let i = 1; i < 60; i++) {
+    const next = new Date(today.setDate(today.getDate() + 1));
+    const day = next.getDate();
+    const month = next.getMonth() + 1;
+    const year = next.getFullYear();
 
-      const date = `${year}/${month}/${day}`;
-      console.log(date);
-
-      days.push({ id: i, date, status: "NEXT" });
-    }
-  } else {
-    for (let i = 1; i < 60; i++) {
-      const next = new Date(today.setDate(today.getDate() + 1));
-      const day = next.getDate();
-      // const month = next.toLocaleString("default", { month: "numeric" });
-      const month = next.getMonth() + 1;
-      // console.log("Month:", next.getMonth());
-      // const year = next.toLocaleString("default", { year: "numeric" });
-      const year = next.getFullYear();
-
-      const date = `${year}/${month}/${day}`;
-      console.log(date);
-
-      days.push({ id: i, date, status: "NEXT" });
-    }
+    const date = `${year}/${month}/${day}`;
+    days.push({ id: i, date, status: "NEXT" });
   }
 
   return days;

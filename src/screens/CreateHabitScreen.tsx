@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react";
-import { Pressable } from "react-native";
+import { Dimensions, Pressable } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button, Input } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
@@ -20,9 +20,11 @@ import { useThemeMode } from "../hooks/useThemeMode";
 
 const POMODORE_OPTIONS = ["15", "30", "60", "120"];
 
-const CreateHabitScreen: React.FC<
-  RootStackScreenProps<"CreateHabitScreen">
-> = ({ navigation }) => {
+const { height } = Dimensions.get("window");
+
+const CreateHabitScreen = ({
+  navigation,
+}: RootStackScreenProps<"CreateHabitScreen">) => {
   const { onCreateHabit } = useHabitsContext();
   const { colors, sizes } = useTheme();
   const { mode } = useThemeMode();
@@ -31,6 +33,10 @@ const CreateHabitScreen: React.FC<
     createHabitFormInitialState
   );
   const [showSelectIconModal, setSelectIconModal] = useState<boolean>(false);
+
+  const [contentHeight, setContentHeight] = useState(0);
+  const [scrollEnabled, setScrollEnabled] = useState(false);
+  // const scrollEnabled = contentHeight > height;
 
   const onChange = (input: TCreateHabitFormUpdateType, text: string) => {
     formDispatch({
@@ -120,88 +126,97 @@ const CreateHabitScreen: React.FC<
         onPressClose={() => navigation.goBack()}
       />
 
-      <Block padding={sizes.padding}>
-        <AddHabitIconButton
-          currentIcon={formState.icon}
-          onPress={() => setSelectIconModal(true)}
-        />
-
-        <Block marginVertical={sizes.md}>
-          <Text
-            body
-            color={formState.nameError ? colors.error : colors[mode].text}
-          >
-            Name
-          </Text>
-          <Input
-            value={formState.name}
-            placeholder="Enter habit name"
-            placeholderTextColor={colors.lightGray}
-            fontSize={24}
-            marginVertical={8}
-            onChangeText={(text) => {
-              onChange("name", text);
-              onError("CLEAR_ERROR");
-            }}
-            onFocus={() => onError("CLEAR_ERROR")}
-          />
-        </Block>
-        {formState.nameError && (
-          <Text color={colors.error}>You have to fill this form</Text>
-        )}
-        <Block>
-          <Text body color={colors[mode].text}>
-            Description
-          </Text>
-          <Input
-            placeholder="Optional"
-            placeholderTextColor={colors.lightGray}
-            fontSize={24}
-            marginVertical={8}
-            onChangeText={(text) => onChange("desc", text)}
-          />
-        </Block>
-
-        <TitleToggleRow
-          title="Pomodore"
-          initialState={formState.pomodore}
-          onPress={() => onToggle("pomodore")}
-        />
-
-        {formState.pomodore && (
-          <Block row justify="space-between" marginBottom={sizes.s}>
-            {pomodoreOptions()}
-          </Block>
-        )}
-
-        <TitleToggleRow
-          title="Notification"
-          initialState={false}
-          onPress={() => onToggle("notification")}
-        />
-
-        <PrimaryButton
-          title="Create a new project"
-          onPress={onCreateNewHabit}
-        />
-
-        <Pressable
-          onPress={() => console.log(formState)}
-          style={{ backgroundColor: "blue" }}
+      <Block
+        scroll
+        color="yellow"
+        paddingHorizontal={sizes.padding}
+        scrollEnabled={!scrollEnabled}
+        onContentSizeChange={(h) => {
+          setScrollEnabled(h > contentHeight);
+        }}
+      >
+        <Block
+          color="red"
+          paddingTop={sizes.padding}
+          onLayout={(event) => {
+            // console.log(event.currentTarget.measure);
+            const h = event.nativeEvent.layout.height;
+            setContentHeight(h);
+          }}
         >
-          <Text align="center" color={"white"}>
-            Print data
-          </Text>
-        </Pressable>
-      </Block>
+          <AddHabitIconButton
+            currentIcon={formState.icon}
+            onPress={() => setSelectIconModal(true)}
+          />
 
-      {showSelectIconModal && (
-        <SelectHabitIconModal
-          selected={formState.icon}
-          onSelect={onChangeIcon}
-          onClose={() => setSelectIconModal(false)}
-        />
-      )}
+          <Block marginVertical={sizes.md}>
+            <Text
+              body
+              color={formState.nameError ? colors.error : colors[mode].text}
+            >
+              Name
+            </Text>
+            <Input
+              value={formState.name}
+              placeholder="Enter habit name"
+              placeholderTextColor={colors.lightGray}
+              fontSize={24}
+              marginVertical={8}
+              onChangeText={(text) => {
+                onChange("name", text);
+                onError("CLEAR_ERROR");
+              }}
+              onFocus={() => onError("CLEAR_ERROR")}
+            />
+          </Block>
+          {formState.nameError && (
+            <Text color={colors.error}>You have to fill this form</Text>
+          )}
+          <Block>
+            <Text body color={colors[mode].text}>
+              Description
+            </Text>
+            <Input
+              placeholder="Optional"
+              placeholderTextColor={colors.lightGray}
+              fontSize={24}
+              marginVertical={8}
+              onChangeText={(text) => onChange("desc", text)}
+            />
+          </Block>
+
+          <TitleToggleRow
+            title="Pomodore"
+            initialState={formState.pomodore}
+            onPress={() => onToggle("pomodore")}
+          />
+
+          {formState.pomodore && (
+            <Block row justify="space-between" marginBottom={sizes.s}>
+              {pomodoreOptions()}
+            </Block>
+          )}
+
+          <TitleToggleRow
+            title="Notification"
+            initialState={formState.notification}
+            onPress={() => onToggle("notification")}
+          />
+
+          <PrimaryButton
+            title="Create a new project"
+            onPress={onCreateNewHabit}
+          />
+        </Block>
+
+        {showSelectIconModal && (
+          <SelectHabitIconModal
+            selected={formState.icon}
+            onSelect={onChangeIcon}
+            onClose={() => setSelectIconModal(false)}
+          />
+        )}
+      </Block>
     </Block>
   );
 };

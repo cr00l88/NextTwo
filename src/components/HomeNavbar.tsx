@@ -23,7 +23,8 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
     >
       <Button
         // hitSlopArea
-        color={mode === "light" ? colors.lightGray : colors.white}
+        color={mode === "light" ? "#F2F0F0" : colors.white}
+        colorPressed={"green"}
         radius={4}
         padding={6}
         onPress={onPressSettings}
@@ -36,6 +37,7 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
       <Button
         // hitSlopArea
         color={mode === "light" ? colors.black : colors.white}
+        colorPressed={mode === "dark" ? "#D6D6D6" : "#2B2B2B"}
         radius={4}
         padding={6}
         onPress={onPressCreate}

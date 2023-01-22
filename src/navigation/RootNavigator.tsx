@@ -1,6 +1,12 @@
+import { useLayoutEffect } from "react";
+import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { RootNavigatorParamsList } from "../types/rootNavigator";
+
+import { useHabitsContext } from "../hooks/useHabitsContext";
+import { useThemeMode } from "../hooks/useThemeMode";
+import { useTheme } from "../hooks/useTheme";
 
 import HomeScreen from "../screens/HomeScreen";
 import CreateHabitScreen from "../screens/CreateHabitScreen";
@@ -9,20 +15,15 @@ import HabitDetailsScreen from "../screens/HabitDetailsScreen";
 import HabitActionSheetModal from "../screens/HabitActionSheetModal";
 import SelectHabitIconModal from "../screens/SelectHabitIconModal";
 import PomodoroScreen from "../screens/PomodoroScreen";
-import { useEffect } from "react";
-import { useHabitsContext } from "../hooks/useHabitsContext";
-import { useThemeMode } from "../hooks/useThemeMode";
-import { StatusBar } from "react-native";
-import { useTheme } from "../hooks/useTheme";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
 const RootNavigator = () => {
-  const { onLoadHabits } = useHabitsContext();
   const { mode, onLoadTheme } = useThemeMode();
+  const { onLoadHabits } = useHabitsContext();
   const { colors } = useTheme();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onLoadTheme();
     onLoadHabits();
   }, []);

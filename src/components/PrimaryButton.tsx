@@ -19,6 +19,7 @@ const PrimaryButton = ({ title, onPress, style }: IPrimaryButtonProps) => {
       marginVertical={sizes.s}
       paddingVertical={sizes.sm}
       color={mode === "dark" ? colors.white : colors.black}
+      colorPressed={mode === "dark" ? "#D6D6D6" : "#2B2B2B"}
       radius={sizes.buttonRadius}
       onPress={onPress}
       style={style}

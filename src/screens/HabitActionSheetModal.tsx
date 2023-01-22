@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useTheme } from "../hooks/useTheme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSpring,
+} from "react-native-reanimated";
 
 const HabitActionSheetModal: React.FC<
   RootStackScreenProps<"HabitActionSheetModal">
@@ -14,7 +20,24 @@ const HabitActionSheetModal: React.FC<
   const { habit, onMarkDoneToday, onDeleteHabit } = useHabitsContext();
   const { colors, sizes } = useTheme();
 
-  const closeModal = () => navigation.goBack();
+  const fade = useSharedValue(0.0);
+
+  const rFadeStyle = useAnimatedStyle(() => {
+    return {
+      opacity: fade.value,
+    };
+  });
+
+  useEffect(() => {
+    fade.value = withDelay(250, withSpring(0.2));
+  }, []);
+
+  const closeModal = () => {
+    fade.value = withSpring(0.0);
+    setTimeout(() => {
+      navigation.goBack();
+    }, 200);
+  };
 
   const onPressMarkDone = () => {
     onMarkDoneToday(id);
@@ -30,10 +53,11 @@ const HabitActionSheetModal: React.FC<
   return (
     <Block flex={1}>
       <Pressable onPress={closeModal} style={StyleSheet.absoluteFill}>
-        <Block
+        <Animated.View
           style={[
             StyleSheet.absoluteFill,
-            { backgroundColor: "rgba(0, 0, 0, 0.2)" },
+            { backgroundColor: "black" },
+            rFadeStyle,
           ]}
         />
       </Pressable>

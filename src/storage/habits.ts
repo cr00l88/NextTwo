@@ -54,7 +54,6 @@ export const updateHabitsData = async (habits: IHabit[]) => {
         ),
       ],
     }));
-    console.log(updatedHabits);
     await storeHabitsData(updatedHabits);
   } catch (error) {
     console.error(error);

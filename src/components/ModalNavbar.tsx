@@ -51,7 +51,7 @@ const ModalNavbar = ({
       </Block>
 
       {showSeperator && (
-        <Block color={colors[mode].desc} style={{ height: 1 }} />
+        <Block color={colors[mode].separator} style={{ height: 1 }} />
       )}
     </Block>
   );

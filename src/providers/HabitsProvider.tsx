@@ -143,7 +143,7 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const onLoadHabits = async () => {
     try {
       const habits = await getHabitsData();
-      await updateHabitsData(habits);
+      habits !== null && (await updateHabitsData(habits));
     } catch (error) {
       console.error(error);
     } finally {

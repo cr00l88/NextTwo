@@ -6,6 +6,7 @@ import { useTheme } from "../hooks/useTheme";
 import ModalNavbar from "../components/ModalNavbar";
 
 import { useThemeMode } from "../hooks/useThemeMode";
+import DaysDetailList from "../components/DaysDetailList";
 
 const HabitDetailsScreen: React.FC<
   RootStackScreenProps<"HabitDetailsScreen">
@@ -31,12 +32,12 @@ const HabitDetailsScreen: React.FC<
   );
 
   return (
-    <Block flex={1} color={colors[mode].bg}>
+    <Block flex={1} color={"colors[mode].bg"}>
       <ModalNavbar
         showSeperator={false}
         onPressClose={() => navigation.goBack()}
       />
-      <Block align="center">
+      <Block paddingHorizontal={16}>
         {habit.name ? (
           <Text h4 align="center">
             {habit.name}
@@ -50,6 +51,8 @@ const HabitDetailsScreen: React.FC<
             {habit.desc}
           </Text>
         )}
+
+        <Text>{habit.createdBy}</Text>
 
         {habit.pomodore && pomodoreInfo()}
 
@@ -87,25 +90,7 @@ const HabitDetailsScreen: React.FC<
           <Text color={"white"}>Print habit</Text>
         </Button>
 
-        <Block
-          flex={1}
-          scroll
-          style={{ flexWrap: "wrap", backgroundColor: "yellow" }}
-        >
-          {habit.days.map((day) => (
-            <Block
-              key={day.id}
-              style={{
-                width: 24,
-                height: 32,
-                backgroundColor: "red",
-                margin: 2,
-              }}
-            >
-              <Text>{day.id}</Text>
-            </Block>
-          ))}
-        </Block>
+        <DaysDetailList days={habit.days} />
       </Block>
     </Block>
   );
