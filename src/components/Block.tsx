@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { StyleProp } from "react-native";
 import { View, StyleSheet, ViewStyle } from "react-native";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 interface IBlockProps extends ViewProps, ScrollViewProps {
   id?: string;
@@ -71,7 +71,7 @@ const Block = ({
   style,
   ...props
 }: IBlockProps) => {
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
 
   const blockStyle = StyleSheet.flatten([
     border !== undefined && {

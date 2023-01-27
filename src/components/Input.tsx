@@ -6,7 +6,7 @@ import {
   TextInputProps,
   TextStyle,
 } from "react-native";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 interface IInputProps extends TextInputProps {
   children?: React.ReactNode;
@@ -50,7 +50,7 @@ const Input = ({
   style,
   ...props
 }: IInputProps) => {
-  const { sizes } = useTheme();
+  const { sizes } = useThemeStyles();
 
   const inputStyle = StyleSheet.flatten([
     border !== undefined && {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch as RNSwitch } from "react-native";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 
 interface ISwitchProps {
@@ -9,7 +9,7 @@ interface ISwitchProps {
 }
 
 const Switch = ({ value, onValueChange }: ISwitchProps) => {
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
 
   return (

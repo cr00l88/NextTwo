@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button, Icon } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import ModalNavbar from "../components/ModalNavbar";
 
 import { useThemeMode } from "../hooks/useThemeMode";
@@ -12,7 +12,7 @@ const HabitDetailsScreen: React.FC<
   RootStackScreenProps<"HabitDetailsScreen">
 > = ({ navigation, route }) => {
   const { id } = route.params;
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   const { habit, onMarkDoneToday } = useHabitsContext();
   const [isMarkDone, setMarkDone] = useState<boolean>(false);
@@ -32,14 +32,14 @@ const HabitDetailsScreen: React.FC<
   );
 
   return (
-    <Block flex={1} color={"colors[mode].bg"}>
+    <Block flex={1} color={colors[mode].bg}>
       <ModalNavbar
         showSeperator={false}
         onPressClose={() => navigation.goBack()}
       />
       <Block paddingHorizontal={16}>
         {habit.name ? (
-          <Text h4 align="center">
+          <Text h4 align="center" color={colors[mode].text}>
             {habit.name}
           </Text>
         ) : (
@@ -47,12 +47,12 @@ const HabitDetailsScreen: React.FC<
         )}
 
         {habit.desc && (
-          <Text p color={colors.gray}>
+          <Text p color={colors[mode].desc}>
             {habit.desc}
           </Text>
         )}
 
-        <Text>{habit.createdBy}</Text>
+        <Text color={colors[mode].desc}>{habit.createdBy}</Text>
 
         {habit.pomodore && pomodoreInfo()}
 

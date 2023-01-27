@@ -8,7 +8,7 @@ import Reanimated, {
   withTiming,
 } from "react-native-reanimated";
 import { useHabitsContext } from "../hooks/useHabitsContext";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import SettingRow from "../components/SettingRow";
 import ModalNavbar from "../components/ModalNavbar";
@@ -18,7 +18,7 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
 }) => {
   const { onDeleteAllHabits } = useHabitsContext();
   const [isNotify, setNotify] = useState<boolean>(false);
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
   const { mode, onChangeMode } = useThemeMode();
 
   const progress = useDerivedValue(() => {

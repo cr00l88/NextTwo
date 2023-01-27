@@ -3,7 +3,7 @@ import { Pressable, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
   useAnimatedStyle,
@@ -18,7 +18,7 @@ const HabitActionSheetModal: React.FC<
   const insets = useSafeAreaInsets();
   const { id } = route.params;
   const { habit, onMarkDoneToday, onDeleteHabit } = useHabitsContext();
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
 
   const fade = useSharedValue(0.0);
 

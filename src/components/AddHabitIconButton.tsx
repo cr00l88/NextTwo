@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Block, Text, Button, Input, Icon } from "./index";
 import { THabitIconType } from "../assets/icons/icons";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 interface IAddHabitIconButtonProps {
   currentIcon: THabitIconType | "none";
@@ -13,7 +13,7 @@ const AddHabitIconButton = ({
   currentIcon,
   onPress,
 }: IAddHabitIconButtonProps) => {
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
 
   if (currentIcon !== "none") {
     return (

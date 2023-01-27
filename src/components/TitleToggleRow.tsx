@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import { Block, Text, Switch } from "./index";
 
@@ -14,7 +14,7 @@ const TitleToggleRow = ({
   initialState,
   onPress,
 }: ITitleToggleRowProps) => {
-  const { sizes, colors } = useTheme();
+  const { sizes, colors } = useThemeStyles();
   const { mode } = useThemeMode();
 
   return (

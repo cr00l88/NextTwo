@@ -7,13 +7,14 @@ import HabitRow from "../components/HabitRow";
 import { FlatList } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import { useThemeMode } from "../hooks/useThemeMode";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
+import TodaySummaryBanner from "../components/TodaySummaryBanner";
 
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
 }) => {
   const { habits, getHabit } = useHabitsContext();
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   const [showSeparator, setShowSeparator] = useState<boolean>(false);
 
@@ -64,6 +65,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
               No habit here
             </Text>
           )}
+          ListHeaderComponent={() => <TodaySummaryBanner />}
           scrollEventThrottle={16}
           onScroll={(event) => {
             const offset = event.nativeEvent.contentOffset.y;

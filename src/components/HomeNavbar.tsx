@@ -1,7 +1,7 @@
 import React from "react";
 import { SvgXml } from "react-native-svg";
 import { Icons } from "../assets/icons/icons";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import { Block, Button } from "./index";
 
@@ -11,7 +11,7 @@ interface IHomeNavbarProps {
 }
 
 const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   return (
     <Block

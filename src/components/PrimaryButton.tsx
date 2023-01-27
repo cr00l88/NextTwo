@@ -1,5 +1,5 @@
 import { Button, Text } from "./index";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { StyleProp, ViewStyle } from "react-native";
 import { useThemeMode } from "../hooks/useThemeMode";
 
@@ -10,7 +10,7 @@ interface IPrimaryButtonProps {
 }
 
 const PrimaryButton = ({ title, onPress, style }: IPrimaryButtonProps) => {
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
   const { mode } = useThemeMode();
 
   return (

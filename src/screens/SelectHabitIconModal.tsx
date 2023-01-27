@@ -8,7 +8,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { HabitIcons, THabitIconType } from "../assets/icons/icons";
 import { Block, Button, Icon, Text } from "../components";
 import ModalNavbar from "../components/ModalNavbar";
@@ -27,7 +27,7 @@ const SelectHabitIconModal = ({
   onSelect,
   selected = "bike",
 }: ISelectHabitIconModalProps) => {
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
   const IconList = Object.keys(HabitIcons) as THabitIconType[];
 
   const renderItem = ({ item }) => (

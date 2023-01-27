@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SvgXml } from "react-native-svg";
 import { SystemIcons } from "../assets/icons/icons";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import { Block, Button, Text } from "./index";
 
@@ -16,7 +16,7 @@ const ModalNavbar = ({
   showSeperator = true,
   onPressClose,
 }: IModalNavbarProps) => {
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   const [counterWidth, setCounterWidth] = useState<number>(0);
 

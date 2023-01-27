@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from "react-native";
 import Animated from "react-native-reanimated";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 type TTextStyleProps = Pick<
   TextStyle,
@@ -69,7 +69,7 @@ const Text = ({
   style,
   ...props
 }: ITextProps) => {
-  const { colors, sizes, lineHeights } = useTheme();
+  const { colors, sizes, lineHeights } = useThemeStyles();
   const textStyle = StyleSheet.flatten([
     {
       color: colors.text,

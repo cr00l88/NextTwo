@@ -4,7 +4,7 @@ import { Block, Text, Button, Icon } from "./";
 import { THabitRow } from "../types/habit";
 import IconButton from "./IconButton";
 import DayCell from "./DayCell";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 
 interface IHabitRowProps {
@@ -18,7 +18,7 @@ const HabitRow = ({
   onPressRow,
   onPressMoreOptions,
 }: IHabitRowProps) => {
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
   const { mode } = useThemeMode();
   const renderItem = ({ item }) => <DayCell status={item.status} />;
 

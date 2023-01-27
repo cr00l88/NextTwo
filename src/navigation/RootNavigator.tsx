@@ -6,7 +6,7 @@ import { RootNavigatorParamsList } from "../types/rootNavigator";
 
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useThemeMode } from "../hooks/useThemeMode";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 import HomeScreen from "../screens/HomeScreen";
 import CreateHabitScreen from "../screens/CreateHabitScreen";
@@ -21,7 +21,7 @@ const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 const RootNavigator = () => {
   const { mode, onLoadTheme } = useThemeMode();
   const { onLoadHabits } = useHabitsContext();
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
 
   useLayoutEffect(() => {
     onLoadTheme();

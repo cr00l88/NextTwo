@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { Block, Icon, Text } from "./";
 import { TSystemIconType } from "../assets/icons/icons";
 import { useThemeMode } from "../hooks/useThemeMode";
@@ -12,7 +12,7 @@ interface ISettingRowProps {
 }
 
 const SettingRow = ({ children, icon, title, desc }: ISettingRowProps) => {
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
   const { mode } = useThemeMode();
 
   return (

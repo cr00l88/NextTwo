@@ -42,7 +42,7 @@ export const getHabitsData = async () => {
 
 export const updateHabitsData = async (habits: IHabit[]) => {
   try {
-    const updatedHabits = habits.map((habit) => ({
+    const updateStatus = habits.map((habit) => ({
       ...habit,
       days: [
         ...habit.days.map(
@@ -54,7 +54,17 @@ export const updateHabitsData = async (habits: IHabit[]) => {
         ),
       ],
     }));
-    await storeHabitsData(updatedHabits);
+    const filterIfDoneToday = updateStatus.map((habit) => {
+      if (
+        habit.days.find((day) => day.status === "TODAY_SUCCESS") !== undefined
+      ) {
+        return { ...habit, isDoneToday: true };
+      } else {
+        return { ...habit, isDoneToday: false };
+      }
+    });
+
+    await storeHabitsData(filterIfDoneToday);
   } catch (error) {
     console.error(error);
   }
@@ -66,6 +76,7 @@ export const markDoneHabitData = async (id: string, habits: IHabit[]) => {
       habit.id === id
         ? {
             ...habit,
+            isDoneToday: true,
             days: [
               ...habit.days.map((day) =>
                 day.status === "TODAY_TODO"

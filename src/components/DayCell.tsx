@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Block, Icon } from "./index";
 import { TDayCellType } from "../types/dayCell";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 interface IDayCellProps {
   status: TDayCellType;
@@ -10,7 +10,7 @@ interface IDayCellProps {
 }
 
 const DayCell = ({ status, size = 18 }: IDayCellProps) => {
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
 
   const styles = StyleSheet.create({
     cell: {

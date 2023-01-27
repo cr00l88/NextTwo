@@ -2,7 +2,7 @@ import React from "react";
 import { ColorValue, StyleSheet, View, ViewStyle } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { Icons, TIcon } from "../assets/icons/icons";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import Block from "./Block";
 
 type TViewStyleProps = Pick<
@@ -33,7 +33,7 @@ const Icon = ({
   marginHorizontal,
   marginVertical,
 }: IIconProps) => {
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
 
   const IconStyle = StyleSheet.flatten([
     margin !== undefined && { margin },

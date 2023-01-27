@@ -1,7 +1,7 @@
 import { Pressable, StatusBar, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { useHabitsContext } from "../hooks/useHabitsContext";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { Block, Text, Button } from "../components";
 import BottomSheet, { TBottomSheetRefProps } from "../components/BottomSheet";
 import { useCallback, useRef, useState } from "react";
@@ -11,7 +11,7 @@ const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
   navigation,
 }) => {
   const { getHabit } = useHabitsContext();
-  const { colors } = useTheme();
+  const { colors } = useThemeStyles();
   const ref = useRef<TBottomSheetRefProps>(null);
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
 

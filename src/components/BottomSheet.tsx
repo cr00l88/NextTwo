@@ -6,7 +6,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import { Block } from "./index";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -27,7 +27,7 @@ export type TBottomSheetRefProps = {
 const BottomSheet = React.forwardRef<TBottomSheetRefProps, TBottomSheetProps>(
   ({ children }, ref) => {
     const insets = useSafeAreaInsets();
-    const { colors } = useTheme();
+    const { colors } = useThemeStyles();
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
     const [contentHeight, setContentHeight] = useState(0);

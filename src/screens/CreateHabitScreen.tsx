@@ -11,7 +11,7 @@ import {
   TCreateHabitFormUpdateType,
   TCreateHabitFormToggleType,
 } from "../reducers/createHabitFormReducer";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 import ModalNavbar from "../components/ModalNavbar";
 import SelectHabitIconModal from "./SelectHabitIconModal";
 import { THabitIconType } from "../assets/icons/icons";
@@ -26,7 +26,7 @@ const CreateHabitScreen = ({
   navigation,
 }: RootStackScreenProps<"CreateHabitScreen">) => {
   const { onCreateHabit } = useHabitsContext();
-  const { colors, sizes } = useTheme();
+  const { colors, sizes } = useThemeStyles();
   const { mode } = useThemeMode();
   const [formState, formDispatch] = useReducer(
     createHabitFormReducer,

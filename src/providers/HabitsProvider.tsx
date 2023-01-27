@@ -96,6 +96,7 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
       desc: habit.desc,
       icon: habit.icon,
       days: days,
+      isDoneToday: false,
       pomodore: habit.pomodore,
       pomodoreTime: habit.pomodoreTime,
       notification: habit.notification,

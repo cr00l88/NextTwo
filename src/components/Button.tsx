@@ -6,7 +6,7 @@ import {
   StyleProp,
   Pressable,
 } from "react-native";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 type TViewStyleProps = Pick<ViewStyle, "width">;
 
@@ -63,7 +63,7 @@ const Button = ({
   hitSlopArea,
   ...props
 }: IButtonProps) => {
-  const { sizes, colors } = useTheme();
+  const { sizes, colors } = useThemeStyles();
 
   const buttonStyle = StyleSheet.flatten([
     { borderRadius: sizes.buttonRadius },
