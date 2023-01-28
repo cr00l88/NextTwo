@@ -46,6 +46,8 @@ const TodaySummaryBanner = ({ habitsNum }: ITodaySummaryBannerProps) => {
       paddingVertical={12}
       style={{
         borderRadius: 10,
+        borderWidth: 1,
+        borderColor: colors.white,
       }}
     >
       <DoneTodayCounterCircle
