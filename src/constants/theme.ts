@@ -50,6 +50,7 @@ interface IThemeModeColors {
   desc: string;
   icon: string;
   frame: string;
+  framePressed: string;
   separator: string;
   bg: string;
 }
@@ -134,6 +135,7 @@ const LIGHT_MODE: IThemeModeColors = {
   desc: "#A3A3A3",
   icon: "#090909",
   frame: "#FFFFFF",
+  framePressed: "#F9F8F8",
   separator: "#CFCCCC",
   bg: "#FFFFFF",
 };
@@ -143,6 +145,7 @@ const DARK_MODE: IThemeModeColors = {
   desc: "#B7B1B1",
   icon: "#FFFFFF",
   frame: "#272727",
+  framePressed: "green",
   separator: "#272626",
   bg: "#090909",
 };

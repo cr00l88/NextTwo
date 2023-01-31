@@ -1,5 +1,5 @@
-import { useReducer, useState } from "react";
-import { Dimensions, Pressable } from "react-native";
+import React, { useReducer, useState } from "react";
+import { Dimensions, Pressable, StatusBar } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button, Input } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
@@ -121,6 +121,8 @@ const CreateHabitScreen = ({
 
   return (
     <Block flex={1} color={colors[mode].bg}>
+      <StatusBar barStyle="light-content" />
+
       <ModalNavbar
         title="Create a new habit"
         onPressClose={() => navigation.goBack()}

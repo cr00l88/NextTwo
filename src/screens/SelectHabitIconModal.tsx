@@ -78,61 +78,14 @@ const SelectHabitIconModal = ({
         >
           <ModalNavbar title="Select icon" onPressClose={onClose} />
           <Block padding={16}>
-            <SectionList
-              sections={HABIT_ICONS_LIST}
-              keyExtractor={(item, index) => item + index}
-              renderItem={({ item, index, section }) => (
-                <FlatList
-                  data={section.data}
-                  // horizontal={true}
-                  columnWrapperStyle={{ justifyContent: "space-between" }}
-                  numColumns={4}
-                  keyExtractor={(item) => item}
-                  renderItem={({ item }) => (
-                    <Block
-                      align="center"
-                      paddingVertical={8}
-                      flex={1}
-                      border
-                      margin={2}
-                    >
-                      <Text>{item}</Text>
-                    </Block>
-                  )}
-                  // ListFooterComponent={<Block style={{ height: 32 }} />}
-                />
-                // <View
-                //   style={{
-                //     backgroundColor: "#f9c2ff",
-                //     padding: 20,
-                //     marginVertical: 8,
-                //   }}
-                // >
-                //   <Text>{item}</Text>
-                // </View>
-              )}
-              renderSectionHeader={({ section: { title } }) => (
-                <Text
-                  style={{
-                    fontSize: 20,
-                    backgroundColor: "white",
-                    marginLeft: 8,
-                    marginVertical: 8,
-                  }}
-                >
-                  {title}
-                </Text>
-              )}
+            <FlatList
+              style={{ marginHorizontal: sizes.padding, paddingVertical: 12 }}
+              data={IconList}
+              numColumns={4}
+              columnWrapperStyle={{ justifyContent: "space-evenly" }}
+              renderItem={renderItem}
             />
           </Block>
-
-          {/* <FlatList
-            style={{ marginHorizontal: sizes.padding, paddingVertical: 12 }}
-            data={IconList}
-            numColumns={4}
-            columnWrapperStyle={{ justifyContent: "space-evenly" }}
-            renderItem={renderItem}
-          /> */}
         </Block>
       </Block>
     </Modal>

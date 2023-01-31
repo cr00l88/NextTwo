@@ -47,7 +47,7 @@ const ThemeProvider: React.FC<PropsWithChildren> = ({ children }) => {
     try {
       const theme = await getThemeData();
       theme !== null ? onChangeMode(theme) : onChangeMode("light");
-      console.log("Loaded theme", theme);
+      console.log("[START]", "Loaded theme", theme);
     } catch (error) {
       console.error(error);
     }

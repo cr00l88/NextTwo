@@ -15,11 +15,13 @@ const HabitDetailsScreen: React.FC<
   const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   const { habit, onMarkDoneToday } = useHabitsContext();
-  const [isMarkDone, setMarkDone] = useState<boolean>(false);
 
   const onPressMarkDone = () => {
-    onMarkDoneToday(id);
-    setMarkDone(true);
+    if (habit.pomodore) {
+      navigation.navigate("PomodoroScreen", { id });
+    } else {
+      onMarkDoneToday(id);
+    }
   };
 
   const pomodoreInfo = () => (
@@ -57,14 +59,14 @@ const HabitDetailsScreen: React.FC<
         {habit.pomodore && pomodoreInfo()}
 
         <Button
-          disabled={isMarkDone}
+          disabled={habit.isDoneToday}
           paddingHorizontal={12}
           paddingVertical={4}
-          color={isMarkDone ? colors.lightGray : "#33FF99"}
-          onPress={isMarkDone ? () => {} : () => onPressMarkDone()}
+          color={habit.isDoneToday ? colors.lightGray : "#33FF99"}
+          onPress={habit.isDoneToday ? () => {} : () => onPressMarkDone()}
         >
           <Text color={"black"}>
-            {isMarkDone
+            {habit.isDoneToday
               ? "Marked today"
               : habit.pomodore
               ? "Start pomodore"

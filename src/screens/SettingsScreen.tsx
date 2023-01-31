@@ -12,6 +12,7 @@ import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import SettingRow from "../components/SettingRow";
 import ModalNavbar from "../components/ModalNavbar";
+import { StatusBar } from "react-native";
 
 const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   navigation,
@@ -55,6 +56,7 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
         rStyle,
       ]}
     >
+      <StatusBar barStyle="light-content" />
       <ModalNavbar title="Settings" onPressClose={() => navigation.goBack()} />
       <Block paddingHorizontal={sizes.padding}>
         <SettingRow

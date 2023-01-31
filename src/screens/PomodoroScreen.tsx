@@ -6,11 +6,14 @@ import { Block, Text, Button } from "../components";
 import BottomSheet, { TBottomSheetRefProps } from "../components/BottomSheet";
 import { useCallback, useRef, useState } from "react";
 import ModalNavbar from "../components/ModalNavbar";
+import ProgressArc from "../components/ProgressArc";
 
 const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
   navigation,
+  route,
 }) => {
-  const { getHabit } = useHabitsContext();
+  const { id } = route.params;
+  const { getHabit, onMarkDoneToday } = useHabitsContext();
   const { colors } = useThemeStyles();
   const ref = useRef<TBottomSheetRefProps>(null);
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
@@ -31,10 +34,12 @@ const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
     <Block flex={1} color={colors.black}>
       <StatusBar barStyle="light-content" />
 
-      <Block flex={1} safe justify="center" align="center">
+      <Block flex={1} safe>
         <Text h4 color={colors.white} marginVertical={12}>
           Pomodoro
         </Text>
+
+        <ProgressArc cb={() => onMarkDoneToday(id)} />
 
         <Button
           center

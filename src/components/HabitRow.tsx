@@ -6,6 +6,11 @@ import IconButton from "./IconButton";
 import DayCell from "./DayCell";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 interface IHabitRowProps {
   habit: THabitRow;
@@ -22,12 +27,36 @@ const HabitRow = ({
   const { mode } = useThemeMode();
   const renderItem = ({ item }) => <DayCell status={item.status} />;
 
+  const pressed = useSharedValue<number>(1.0);
+
+  const rFrameStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: pressed.value }],
+    };
+  });
+
+  const onPressIn = () => {
+    "worklet";
+    pressed.value = withSpring(0.98);
+  };
+
+  const onPressOut = () => {
+    "worklet";
+    pressed.value = withSpring(1.0);
+  };
+
   return (
-    <Pressable onPress={onPressRow} onLongPress={onPressMoreOptions}>
+    <Pressable
+      onPress={onPressRow}
+      onLongPress={onPressMoreOptions}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      delayLongPress={300}
+    >
       {({ pressed }) => (
-        <Block>
+        <Animated.View style={rFrameStyle}>
           <Block
-            color={pressed ? "#F5F2F2" : colors[mode].frame}
+            color={pressed ? colors[mode].framePressed : colors[mode].frame}
             border={mode === "light" ? true : undefined}
             shadow
             padding={16}
@@ -50,11 +79,23 @@ const HabitRow = ({
                 <Text h4 color={colors[mode].text}>
                   {habit.name}
                 </Text>
-                {habit.desc && (
-                  <Text p color={colors[mode].desc}>
-                    {habit.desc}
-                  </Text>
-                )}
+                <Block row align="center">
+                  {habit.pomodore && (
+                    <Icon icon="pomodoro" color={colors[mode].desc} />
+                  )}
+                  {habit.desc && habit.pomodore && (
+                    <Block
+                      marginHorizontal={6}
+                      color={colors[mode].desc}
+                      style={{ width: 6, height: 6, borderRadius: 3 }}
+                    />
+                  )}
+                  {habit.desc && (
+                    <Text p color={colors[mode].desc}>
+                      {habit.desc}
+                    </Text>
+                  )}
+                </Block>
               </Block>
             </Block>
 
@@ -70,6 +111,7 @@ const HabitRow = ({
 
           <IconButton
             icon="more"
+            hitSlop={10}
             color={colors.gray}
             onPress={onPressMoreOptions}
             style={{
@@ -82,7 +124,7 @@ const HabitRow = ({
               backgroundColor: "white",
             }}
           />
-        </Block>
+        </Animated.View>
       )}
     </Pressable>
   );

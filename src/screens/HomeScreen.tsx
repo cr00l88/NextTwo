@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { RootStackScreenProps } from "../types/rootNavigator";
-import { Block, Text, Button } from "../components";
+import { Block, Text } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import HomeNavbar from "../components/HomeNavbar";
 import HabitRow from "../components/HabitRow";
 import { FlatList } from "react-native";
-import PrimaryButton from "../components/PrimaryButton";
+
 import { useThemeMode } from "../hooks/useThemeMode";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import TodaySummaryBanner from "../components/TodaySummaryBanner";
+import Animated, {
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
@@ -17,6 +22,16 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   const [showSeparator, setShowSeparator] = useState<boolean>(false);
+
+  const separatorOpacity = useDerivedValue(() => {
+    return showSeparator ? withTiming(1.0) : withTiming(0.0);
+  }, [showSeparator]);
+
+  const rSeparatorOpacityStyle = useAnimatedStyle(() => {
+    return {
+      opacity: separatorOpacity.value,
+    };
+  });
 
   const renderItem = ({ item }) => (
     <HabitRow
@@ -42,15 +57,15 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         onPressCreate={() => navigation.navigate("CreateHabitScreen")}
       />
       {showSeparator && mode === "light" && (
-        <Block color={colors.lightGray} style={{ height: 1, width: "100%" }} />
+        <Animated.View style={rSeparatorOpacityStyle}>
+          <Block
+            color={colors.lightGray}
+            style={{ height: 1, width: "100%" }}
+          />
+        </Animated.View>
       )}
 
       <Block>
-        {/* <PrimaryButton
-          title="Go to pomodore"
-          onPress={() => navigation.navigate("PomodoroScreen", { id: "1234" })}
-        /> */}
-
         <FlatList
           data={habits}
           renderItem={renderItem}
@@ -65,11 +80,11 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
               No habit here
             </Text>
           )}
-          ListHeaderComponent={() => <TodaySummaryBanner />}
+          ListHeaderComponent={() => habits && <TodaySummaryBanner />}
           scrollEventThrottle={16}
           onScroll={(event) => {
             const offset = event.nativeEvent.contentOffset.y;
-            setShowSeparator(offset > 12);
+            setShowSeparator(offset > 8);
           }}
         />
       </Block>

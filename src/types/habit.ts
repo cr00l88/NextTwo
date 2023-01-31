@@ -22,4 +22,7 @@ export type TNewHabit = Pick<
   "name" | "desc" | "icon" | "pomodore" | "pomodoreTime" | "notification"
 > & { nameError: boolean };
 
-export type THabitRow = Pick<IHabit, "id" | "name" | "desc" | "icon" | "days">;
+export type THabitRow = Pick<
+  IHabit,
+  "id" | "name" | "pomodore" | "desc" | "icon" | "days"
+>;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import {
   Canvas,
@@ -54,4 +54,4 @@ const SuccessCircle = ({ size }: ISuccessCircleProps) => {
   );
 };
 
-export default SuccessCircle;
+export default memo(SuccessCircle);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
-import { Block, Text, Button } from "../components";
+import { Block, Text, Button, Icon } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -19,6 +19,7 @@ const HabitActionSheetModal: React.FC<
   const { id } = route.params;
   const { habit, onMarkDoneToday, onDeleteHabit } = useHabitsContext();
   const { colors, sizes } = useThemeStyles();
+  const isDoneToday = habit.isDoneToday;
 
   const fade = useSharedValue(0.0);
 
@@ -40,9 +41,13 @@ const HabitActionSheetModal: React.FC<
   };
 
   const onPressMarkDone = () => {
-    onMarkDoneToday(id);
+    if (habit.pomodore) {
+      navigation.navigate("PomodoroScreen", { id });
+    } else {
+      onMarkDoneToday(id);
 
-    closeModal();
+      closeModal();
+    }
   };
 
   const onPressDelete = () => {
@@ -81,12 +86,26 @@ const HabitActionSheetModal: React.FC<
             center
             marginVertical={sizes.s}
             paddingVertical={sizes.s}
-            color={colors.black}
+            color={isDoneToday ? colors.gray : colors.black}
             onPress={onPressMarkDone}
+            disabled={isDoneToday}
           >
-            <Text body color={colors.white}>
-              Mark done
-            </Text>
+            {isDoneToday ? (
+              <Block row align="center">
+                <Icon
+                  icon="dayCell_success"
+                  color={colors.white}
+                  marginRight={4}
+                />
+                <Text body color={colors.white}>
+                  Done today
+                </Text>
+              </Block>
+            ) : (
+              <Text body color={colors.white}>
+                {habit.pomodore ? "Start pomodoro" : "Mark done"}
+              </Text>
+            )}
           </Button>
 
           <Button

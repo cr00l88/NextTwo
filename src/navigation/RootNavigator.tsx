@@ -15,6 +15,7 @@ import HabitDetailsScreen from "../screens/HabitDetailsScreen";
 import HabitActionSheetModal from "../screens/HabitActionSheetModal";
 import SelectHabitIconModal from "../screens/SelectHabitIconModal";
 import PomodoroScreen from "../screens/PomodoroScreen";
+import { msUntilMidnight } from "../utils/msUntilMidnight";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
 
@@ -26,6 +27,12 @@ const RootNavigator = () => {
   useLayoutEffect(() => {
     onLoadTheme();
     onLoadHabits();
+
+    const msToUpdate = msUntilMidnight();
+    console.log("[START]", msToUpdate, "Ms left to updated");
+    setTimeout(() => {
+      onLoadHabits();
+    }, msToUpdate);
   }, []);
 
   return (
@@ -48,6 +55,7 @@ const RootNavigator = () => {
             headerShown: false,
             presentation: "fullScreenModal",
             animation: "fade",
+            animationTypeForReplace: "pop",
           }}
         />
 

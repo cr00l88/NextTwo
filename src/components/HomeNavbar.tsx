@@ -24,7 +24,7 @@ const HomeNavbar = ({ onPressCreate, onPressSettings }: IHomeNavbarProps) => {
       <Button
         // hitSlopArea
         color={mode === "light" ? "#F2F0F0" : colors.white}
-        colorPressed={"green"}
+        colorPressed={mode === "dark" ? "#ADA9A9" : "#DAD6D6"}
         radius={4}
         padding={6}
         onPress={onPressSettings}
