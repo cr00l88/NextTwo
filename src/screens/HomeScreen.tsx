@@ -14,6 +14,7 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from "react-native-reanimated";
+import HomeEmptyState from "../components/HomeEmptyState";
 
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
@@ -76,11 +77,14 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
             paddingBottom: 64,
           }}
           ListEmptyComponent={() => (
-            <Text h4 margin={8} color="gray" align="center">
-              No habit here
-            </Text>
+            <HomeEmptyState
+              onPress={() => navigation.navigate("CreateHabitScreen")}
+            />
           )}
-          ListHeaderComponent={() => habits && <TodaySummaryBanner />}
+          ListHeaderComponent={() =>
+            habits.length > 0 && <TodaySummaryBanner />
+          }
+          scrollEnabled={habits.length > 0}
           scrollEventThrottle={16}
           onScroll={(event) => {
             const offset = event.nativeEvent.contentOffset.y;
