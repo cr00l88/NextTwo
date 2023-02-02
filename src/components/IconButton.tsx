@@ -33,7 +33,6 @@ const IconButton: React.FC<IIconButtonProps> = ({
   ...props
 }) => {
   const buttonStyle = StyleSheet.flatten([
-    color !== undefined && { backgroundColor: color },
     radius !== undefined && { borderRadius: radius },
     padding !== undefined && { padding },
     style,

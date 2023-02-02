@@ -7,16 +7,21 @@ import BottomSheet, { TBottomSheetRefProps } from "../components/BottomSheet";
 import { useCallback, useRef, useState } from "react";
 import ModalNavbar from "../components/ModalNavbar";
 import ProgressArc from "../components/ProgressArc";
+import ProgreesArcRef, {
+  TProgressArcRefProps,
+} from "../components/ProgressArcRef";
 
 const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
   navigation,
   route,
 }) => {
   const { id } = route.params;
-  const { getHabit, onMarkDoneToday } = useHabitsContext();
+  const { habit, getHabit, onMarkDoneToday } = useHabitsContext();
   const { colors } = useThemeStyles();
   const ref = useRef<TBottomSheetRefProps>(null);
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
+
+  const arcRef = useRef<TProgressArcRefProps>(null);
 
   const onPress = useCallback(() => {
     const isActive = ref?.current?.isActive();
@@ -34,12 +39,42 @@ const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
     <Block flex={1} color={colors.black}>
       <StatusBar barStyle="light-content" />
 
-      <Block flex={1} safe>
-        <Text h4 color={colors.white} marginVertical={12}>
-          Pomodoro
-        </Text>
+      <Block flex={1} safe paddingHorizontal={16}>
+        <Block
+          row
+          justify="space-between"
+          color="yellow
+        "
+        >
+          <Text h4 color={colors.white} marginVertical={12}>
+            Pomodoro
+          </Text>
+          <Text h4 color={colors.gray} marginVertical={12}>
+            {habit.pomodoreTime} min
+          </Text>
+        </Block>
 
-        <ProgressArc cb={() => onMarkDoneToday(id)} />
+        {/* <ProgressArc cb={() => onMarkDoneToday(id)} /> */}
+        <ProgreesArcRef ref={arcRef} />
+
+        <Block row>
+          <Button
+            margin={8}
+            padding={8}
+            color={"white"}
+            onPress={() => arcRef.current.start(3000)}
+          >
+            <Text>Start</Text>
+          </Button>
+          <Button
+            margin={8}
+            padding={8}
+            color={"yellow"}
+            onPress={() => arcRef.current.reset()}
+          >
+            <Text>Reset</Text>
+          </Button>
+        </Block>
 
         <Button
           center
@@ -70,10 +105,10 @@ const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
           padding={10}
           color={colors.black}
           radius={4}
-          onPress={() => console.log(ref?.current?.isActive)}
+          onPress={() => onMarkDoneToday(id)}
         >
           <Text body color="yellow">
-            Status of modal
+            Mark done
           </Text>
         </Button>
       </Block>

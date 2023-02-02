@@ -24,7 +24,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   const [showSeparator, setShowSeparator] = useState<boolean>(false);
 
   const separatorOpacity = useDerivedValue(() => {
-    return showSeparator ? withTiming(1.0) : withTiming(0.0);
+    return showSeparator ? withTiming(1.0, { duration: 200 }) : withTiming(0.0);
   }, [showSeparator]);
 
   const rSeparatorOpacityStyle = useAnimatedStyle(() => {
@@ -56,7 +56,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         onPressSettings={() => navigation.navigate("SettingsScreen")}
         onPressCreate={() => navigation.navigate("CreateHabitScreen")}
       />
-      {showSeparator && mode === "light" && (
+      {mode === "light" && (
         <Animated.View style={rSeparatorOpacityStyle}>
           <Block
             color={colors.lightGray}
@@ -65,7 +65,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         </Animated.View>
       )}
 
-      <Block>
+      <Block flex={1}>
         <FlatList
           data={habits}
           renderItem={renderItem}

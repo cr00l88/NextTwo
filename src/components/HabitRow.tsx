@@ -1,12 +1,15 @@
 import { memo } from "react";
 import { FlatList, Pressable } from "react-native";
-import { Block, Text, Button, Icon } from "./";
+import * as Haptics from "expo-haptics";
+import { Block, Text, Icon } from "./";
 import { THabitRow } from "../types/habit";
 import IconButton from "./IconButton";
 import DayCell from "./DayCell";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import Animated, {
+  FadeIn,
+  FadeOut,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -35,6 +38,11 @@ const HabitRow = ({
     };
   });
 
+  const onLongPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    onPressMoreOptions();
+  };
+
   const onPressIn = () => {
     "worklet";
     pressed.value = withSpring(0.98);
@@ -48,13 +56,13 @@ const HabitRow = ({
   return (
     <Pressable
       onPress={onPressRow}
-      onLongPress={onPressMoreOptions}
+      onLongPress={onLongPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       delayLongPress={300}
     >
       {({ pressed }) => (
-        <Animated.View style={rFrameStyle}>
+        <Animated.View style={rFrameStyle} entering={FadeIn} exiting={FadeOut}>
           <Block
             color={pressed ? colors[mode].framePressed : colors[mode].frame}
             border={mode === "light" ? true : undefined}
@@ -109,10 +117,11 @@ const HabitRow = ({
             />
           </Block>
 
+          {/* More option button */}
           <IconButton
             icon="more"
-            hitSlop={10}
-            color={colors.gray}
+            hitSlop={16}
+            color={colors[mode].desc}
             onPress={onPressMoreOptions}
             style={{
               position: "absolute",
@@ -121,7 +130,7 @@ const HabitRow = ({
               width: 22,
               height: 22,
               borderRadius: 4,
-              backgroundColor: "white",
+              // backgroundColor: "white",
             }}
           />
         </Animated.View>
