@@ -130,7 +130,7 @@ const CreateHabitScreen = ({
 
       <Block
         scroll
-        color="yellow"
+        // color="yellow"
         paddingHorizontal={sizes.padding}
         scrollEnabled={!scrollEnabled}
         onContentSizeChange={(h) => {
@@ -138,7 +138,7 @@ const CreateHabitScreen = ({
         }}
       >
         <Block
-          color="red"
+          // color="red"
           paddingTop={sizes.padding}
           onLayout={(event) => {
             // console.log(event.currentTarget.measure);

@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { Block, Text, Button, Input, Icon } from "./index";
 import { THabitIconType } from "../assets/icons/icons";
 import { useThemeStyles } from "../hooks/useThemeStyles";
+import { useThemeMode } from "../hooks/useThemeMode";
 
 interface IAddHabitIconButtonProps {
   currentIcon: THabitIconType | "none";
@@ -14,22 +15,28 @@ const AddHabitIconButton = ({
   onPress,
 }: IAddHabitIconButtonProps) => {
   const { colors, sizes } = useThemeStyles();
+  const { mode } = useThemeMode();
 
   if (currentIcon !== "none") {
     return (
-      <Block>
-        <Button
-          onPress={onPress}
-          style={[
-            styles.frame,
-            {
-              backgroundColor: colors.lightGray,
-            },
-          ]}
-        >
-          <Icon icon={currentIcon} color={colors.black} />
-        </Button>
-      </Block>
+      <Button
+        style={[
+          styles.frame,
+          {
+            borderWidth: 1,
+            borderColor: colors.lightGray,
+          },
+        ]}
+        color={colors[mode].frame}
+        colorPressed={colors[mode].framePressed}
+        onPress={onPress}
+      >
+        <Icon icon={currentIcon} color={colors.black} />
+
+        <Block style={{ position: "absolute", bottom: 2, right: 2 }}>
+          <Icon icon="change" color={colors.black} />
+        </Block>
+      </Button>
     );
   } else {
     return (
@@ -43,6 +50,8 @@ const AddHabitIconButton = ({
               borderWidth: 2,
             },
           ]}
+          color={colors[mode].frame}
+          colorPressed={colors[mode].framePressed}
         >
           <Icon icon="plus" color={colors.black} />
           <Text body marginTop={8}>
