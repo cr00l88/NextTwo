@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Text } from "./";
 import Animated, {
   FadeOut,
@@ -18,6 +18,7 @@ interface ISnackbarProps {
 const Snackbar = ({ type, onDismiss, message }: ISnackbarProps) => {
   const { bottom: BOTTOM } = useSafeAreaInsets();
   const { colors } = useThemeStyles();
+  const timeRef = useRef(null);
 
   const offset = useSharedValue(60);
 
@@ -31,8 +32,15 @@ const Snackbar = ({ type, onDismiss, message }: ISnackbarProps) => {
     offset.value = withSpring(-BOTTOM);
   }, []);
 
+  const onPress = () => {
+    if (timeRef.current) {
+      clearTimeout(timeRef.current);
+    }
+    onDismiss(false);
+  };
+
   useEffect(() => {
-    setTimeout(() => {
+    timeRef.current = setTimeout(() => {
       onDismiss(false);
     }, 4000);
   }, []);
@@ -42,11 +50,7 @@ const Snackbar = ({ type, onDismiss, message }: ISnackbarProps) => {
       style={[rStyle, { alignSelf: "center", position: "absolute", bottom: 0 }]}
       exiting={FadeOut}
     >
-      <Button
-        padding={12}
-        color={colors.success}
-        onPress={() => onDismiss(false)}
-      >
+      <Button padding={12} color={colors.success} onPress={onPress}>
         <Text color="white">{message}</Text>
       </Button>
     </Animated.View>
