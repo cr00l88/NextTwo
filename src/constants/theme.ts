@@ -156,7 +156,7 @@ const COLORS: IColors = {
   lightGray: "#CFCCCC",
   gray: "#A3A3A3",
   text: "#000",
-  success: "#5FE037",
+  success: "#41B11F",
   warining: "#FFCF51",
   error: "#FF4646",
   light: LIGHT_MODE,

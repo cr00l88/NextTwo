@@ -1,25 +1,16 @@
 import React from "react";
-import {
-  Dimensions,
-  FlatList,
-  Modal,
-  Pressable,
-  SectionList,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Dimensions, Modal, Pressable, StyleSheet } from "react-native";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import { HabitIcons, THabitIconType } from "../assets/icons/icons";
 import { Block, Button, Icon, Text } from "../components";
 import ModalNavbar from "../components/ModalNavbar";
-import { HABIT_ICONS_LIST } from "../utils/habitIconsList";
 import IconsList from "../components/IconsList";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 interface ISelectHabitIconModalProps {
   selected?: THabitIconType | "none";
-  onSelect: (icon: THabitIconType) => void;
+  onSelect: (icon: THabitIconType | "none") => void;
   onClose: () => void;
 }
 
@@ -56,6 +47,15 @@ const SelectHabitIconModal = ({
         >
           <ModalNavbar title="Select icon" onPressClose={onClose} />
           <Block padding={16}>
+            <Button
+              center
+              paddingVertical={8}
+              margin={4}
+              color={colors.lightGray}
+              onPress={() => onSelect("none")}
+            >
+              <Text>No icon</Text>
+            </Button>
             <IconsList
               selected={selected}
               onSelect={onSelect}

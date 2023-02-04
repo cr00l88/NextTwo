@@ -15,6 +15,8 @@ import HabitDetailsScreen from "../screens/HabitDetailsScreen";
 import HabitActionSheetModal from "../screens/HabitActionSheetModal";
 import SelectHabitIconModal from "../screens/SelectHabitIconModal";
 import PomodoroScreen from "../screens/PomodoroScreen";
+import SelectLangScreen from "../screens/SelectLangScreen";
+
 import { msUntilMidnight } from "../utils/msUntilMidnight";
 
 const RootStack = createNativeStackNavigator<RootNavigatorParamsList>();
@@ -95,6 +97,10 @@ const RootNavigator = () => {
             headerShown: false,
           }}
         >
+          <RootStack.Screen
+            name="SelectLangScreen"
+            component={SelectLangScreen}
+          />
           <RootStack.Screen
             name="HabitActionSheetModal"
             component={HabitActionSheetModal}

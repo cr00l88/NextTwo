@@ -14,7 +14,7 @@ const HomeEmptyState = ({ onPress }: IHomeEmptyStateProps) => {
   const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   return (
-    <Block flex={1} justify="center" align="center" color="yellow">
+    <Block flex={1} justify="center" align="center">
       <SvgXml xml={NoHabits} />
       <Text h4 color={colors[mode].desc} marginTop={32} marginBottom={12}>
         No habit here

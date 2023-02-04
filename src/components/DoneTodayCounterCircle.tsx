@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import { Block, Text } from "./index";
 import SuccessCircle from "./SuccessCircle";

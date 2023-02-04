@@ -13,6 +13,7 @@ import { useThemeMode } from "../hooks/useThemeMode";
 import SettingRow from "../components/SettingRow";
 import ModalNavbar from "../components/ModalNavbar";
 import { StatusBar } from "react-native";
+import Snackbar from "../components/Snackbar";
 
 const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   navigation,
@@ -21,6 +22,8 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   const [isNotify, setNotify] = useState<boolean>(false);
   const { colors, sizes } = useThemeStyles();
   const { mode, onChangeMode } = useThemeMode();
+
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
   const progress = useDerivedValue(() => {
     return mode === "dark" ? withTiming(1) : withTiming(0);
@@ -84,13 +87,22 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
           desc="Change language of the app"
           icon="flag"
         >
-          <Block row align="center">
-            <Text animated h4 style={rTextStyle}>
-              EN
-            </Text>
-            {/* <Text h4>EN</Text> */}
-            <Icon icon="arrowRight" color={colors.gray} />
-          </Block>
+          <Button
+            radius={4}
+            color={colors[mode].frame}
+            colorPressed={colors[mode].framePressed}
+            paddingHorizontal={6}
+            paddingVertical={4}
+            onPress={() => navigation.navigate("SelectLangScreen")}
+          >
+            <Block row align="center">
+              <Text animated h4 style={rTextStyle}>
+                EN
+              </Text>
+              {/* <Text h4>EN</Text> */}
+              <Icon icon="arrowRight" color={colors.gray} />
+            </Block>
+          </Button>
         </SettingRow>
 
         <SettingRow
@@ -100,13 +112,24 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
         >
           <Button
             paddingHorizontal={sizes.s}
-            onPress={() => onDeleteAllHabits()}
+            onPress={() => {
+              onDeleteAllHabits();
+              setShowSnackbar(true);
+            }}
             color={colors.error}
           >
             <Text color={colors.white}>Delete</Text>
           </Button>
         </SettingRow>
       </Block>
+
+      {showSnackbar && (
+        <Snackbar
+          type="success"
+          onDismiss={setShowSnackbar}
+          message="Success. All habits deleted."
+        />
+      )}
     </Reanimated.View>
   );
 };
