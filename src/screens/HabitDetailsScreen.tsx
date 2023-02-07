@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button, Icon } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
@@ -8,6 +8,7 @@ import DaysDetailList from "../components/DaysDetailList";
 import HabitDetailsNavbar from "../components/HabitDetailsNavbar";
 import Separator from "../components/Separator";
 import HabitStats from "../components/HabitStats";
+import { View } from "react-native";
 
 const HabitDetailsScreen: React.FC<
   RootStackScreenProps<"HabitDetailsScreen">
@@ -17,6 +18,14 @@ const HabitDetailsScreen: React.FC<
   const { mode } = useThemeMode();
   const { habit, onMarkDoneToday } = useHabitsContext();
   const [showSeparator, setShowSeparator] = useState<boolean>(false);
+
+  const blockRef = useRef(null);
+
+  useLayoutEffect(() => {
+    blockRef.current.measure((width) => {
+      console.log(width);
+    });
+  });
 
   const onPressMarkDone = () => {
     if (habit.pomodore) {
@@ -105,6 +114,10 @@ const HabitDetailsScreen: React.FC<
         >
           <Text color={"white"}>Print habit</Text>
         </Button>
+
+        <View ref={blockRef} style={{ padding: 16, backgroundColor: "red" }}>
+          <Text>Tomasz</Text>
+        </View>
 
         <Block>
           <DaysDetailList days={habit.days} />

@@ -1,23 +1,21 @@
 import { useState } from "react";
-import { RootStackScreenProps } from "../types/rootNavigator";
-import { Block, Text } from "../components";
-import { useHabitsContext } from "../hooks/useHabitsContext";
-import HomeNavbar from "../components/HomeNavbar";
-import HabitRow from "../components/HabitRow";
 import { FlatList } from "react-native";
-
+import { RootStackScreenProps } from "../types/rootNavigator";
+import { Block } from "../components";
+import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useThemeMode } from "../hooks/useThemeMode";
 import { useThemeStyles } from "../hooks/useThemeStyles";
+import { TFilter } from "../types/filters";
+import HomeNavbar from "../components/HomeNavbar";
+import HabitRow from "../components/HabitRow";
 import TodaySummaryBanner from "../components/TodaySummaryBanner";
-import Animated, {
-  useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
-} from "react-native-reanimated";
 import HomeEmptyState from "../components/HomeEmptyState";
 import Separator from "../components/Separator";
+import Filters from "../components/Filters";
 
 // TODO: Fix bottom of flatList
+
+const FILTERS: TFilter[] = ["All", "ToDo", "Done"];
 
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
@@ -26,16 +24,13 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   const [showSeparator, setShowSeparator] = useState<boolean>(false);
+  const [selectedFilter, setSelectedFilter] = useState<TFilter>("All");
 
-  const separatorOpacity = useDerivedValue(() => {
-    return showSeparator ? withTiming(1.0, { duration: 200 }) : withTiming(0.0);
-  }, [showSeparator]);
-
-  const rSeparatorOpacityStyle = useAnimatedStyle(() => {
-    return {
-      opacity: separatorOpacity.value,
-    };
-  });
+  const FILTER_CONDITION = {
+    All: habits,
+    ToDo: habits.filter((habit) => habit.isDoneToday === false),
+    Done: habits.filter((habit) => habit.isDoneToday),
+  };
 
   const renderItem = ({ item }) => (
     <HabitRow
@@ -64,7 +59,8 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
 
       <Block flex={1}>
         <FlatList
-          data={habits}
+          // data={habits}
+          data={FILTER_CONDITION[selectedFilter]}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{
@@ -78,7 +74,16 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
             />
           )}
           ListHeaderComponent={() =>
-            habits.length > 0 && <TodaySummaryBanner />
+            habits.length > 0 && (
+              <Block>
+                <TodaySummaryBanner />
+                <Filters
+                  selected={selectedFilter}
+                  filters={FILTERS}
+                  onSelect={setSelectedFilter}
+                />
+              </Block>
+            )
           }
           scrollEnabled={habits.length > 0}
           scrollEventThrottle={16}

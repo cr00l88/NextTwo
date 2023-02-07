@@ -22,6 +22,7 @@ interface IBlockProps extends ViewProps, ScrollViewProps {
   shadow?: boolean;
   modal?: boolean;
   color?: string;
+  radius?: number;
   align?: ViewStyle["alignItems"];
   justify?: ViewStyle["justifyContent"];
   margin?: ViewStyle["margin"];
@@ -52,6 +53,7 @@ const Block = ({
   shadow,
   modal,
   color,
+  radius,
   align,
   justify,
   margin,
@@ -101,6 +103,7 @@ const Block = ({
     flex !== undefined && { flex },
     row !== undefined && { flexDirection: "row" },
     color !== undefined && { backgroundColor: color },
+    radius !== undefined && { borderRadius: radius },
     align !== undefined && { alignItems: align },
     justify !== undefined && { justifyContent: justify },
     margin !== undefined && { margin },
