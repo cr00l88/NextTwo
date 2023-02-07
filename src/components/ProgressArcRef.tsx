@@ -32,6 +32,7 @@ const SKIA_ARC_PATH = Skia.Path.MakeFromSVGString(ARC_PATH);
 
 type TProgressArcProps = {
   color?: string;
+  cb?: () => void;
 };
 
 export type TProgressArcRefProps = {
@@ -42,21 +43,15 @@ export type TProgressArcRefProps = {
 const ProgreesArcRef = React.forwardRef<
   TProgressArcRefProps,
   TProgressArcProps
->(({ color = "white" }, ref) => {
+>(({ color = "white", cb }, ref) => {
   const progress = useValue(0.0);
-
-  // useEffect(() => {
-  //   runTiming(progress, 1.0, { duration: 3000 }, () => {
-  //     console.log("done");
-  //   });
-  // }, []);
 
   const reset = useCallback(() => {
     runTiming(progress, 0.0, { duration: 300 });
   }, []);
 
   const start = useCallback((time: number) => {
-    runTiming(progress, 1.0, { duration: time });
+    runTiming(progress, 1.0, { duration: time }, cb);
   }, []);
 
   useImperativeHandle(ref, () => ({ reset, start }), [reset, reset]);

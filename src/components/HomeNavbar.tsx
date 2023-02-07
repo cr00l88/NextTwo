@@ -5,6 +5,8 @@ import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import { Block, Button } from "./index";
 
+// TODO: Fix colors
+
 interface IHomeNavbarProps {
   onPressCreate: () => void;
   onPressSettings: () => void;

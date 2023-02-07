@@ -5,8 +5,6 @@ import { MONTH_SHORT } from "../utils/monthsShort";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import DoneTodayCounterCircle from "./DoneTodayCounterCircle";
 
-const CIRCLE_SIZE = 54;
-
 const days = [
   "Sunday",
   "Monday",

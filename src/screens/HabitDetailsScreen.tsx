@@ -3,10 +3,11 @@ import { RootStackScreenProps } from "../types/rootNavigator";
 import { Block, Text, Button, Icon } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useThemeStyles } from "../hooks/useThemeStyles";
-import ModalNavbar from "../components/ModalNavbar";
-
 import { useThemeMode } from "../hooks/useThemeMode";
 import DaysDetailList from "../components/DaysDetailList";
+import HabitDetailsNavbar from "../components/HabitDetailsNavbar";
+import Separator from "../components/Separator";
+import HabitStats from "../components/HabitStats";
 
 const HabitDetailsScreen: React.FC<
   RootStackScreenProps<"HabitDetailsScreen">
@@ -15,6 +16,7 @@ const HabitDetailsScreen: React.FC<
   const { colors } = useThemeStyles();
   const { mode } = useThemeMode();
   const { habit, onMarkDoneToday } = useHabitsContext();
+  const [showSeparator, setShowSeparator] = useState<boolean>(false);
 
   const onPressMarkDone = () => {
     if (habit.pomodore) {
@@ -24,39 +26,51 @@ const HabitDetailsScreen: React.FC<
     }
   };
 
-  const pomodoreInfo = () => (
-    <Block row align="center" margin={8}>
-      <Icon color={colors.black} icon="pomodoro" marginRight={4} />
-      <Text h4 color={colors.black}>
-        {habit.pomodoreTime + " min"}
-      </Text>
-    </Block>
-  );
-
   return (
     <Block flex={1} color={colors[mode].bg}>
-      <ModalNavbar
-        showSeperator={false}
+      <HabitDetailsNavbar
+        habit={habit}
+        onPressMore={() => navigation.navigate("HabitActionSheetModal", { id })}
         onPressClose={() => navigation.goBack()}
       />
-      <Block paddingHorizontal={16}>
-        {habit.name ? (
-          <Text h4 align="center" color={colors[mode].text}>
-            {habit.name}
-          </Text>
-        ) : (
-          <Text>No name</Text>
-        )}
+      <Separator ifShow={showSeparator} />
 
-        {habit.desc && (
-          <Text p color={colors[mode].desc}>
-            {habit.desc}
-          </Text>
-        )}
+      <Block
+        scroll
+        nestedScrollEnabled
+        paddingTop={8}
+        paddingBottom={32}
+        paddingHorizontal={16}
+        scrollEventThrottle={16}
+        onScroll={(event) => {
+          const offset = event.nativeEvent.contentOffset.y;
+          setShowSeparator(offset > 8);
+        }}
+      >
+        <Block row>
+          <Button
+            disabled={habit.isDoneToday}
+            // paddingHorizontal={12}
+            paddingVertical={12}
+            color={habit.isDoneToday ? colors.lightGray : colors.black}
+            style={{ flex: 1, alignItems: "center" }}
+            onPress={habit.isDoneToday ? () => {} : () => onPressMarkDone()}
+          >
+            <Text size={18} color={colors.white}>
+              {habit.isDoneToday
+                ? "Marked today"
+                : habit.pomodore
+                ? "Start pomodore"
+                : "Mark done"}
+            </Text>
+          </Button>
+        </Block>
 
-        <Text color={colors[mode].desc}>{habit.createdBy}</Text>
-
-        {habit.pomodore && pomodoreInfo()}
+        <HabitStats
+          dayNumber={3}
+          progressNumber={12}
+          pomodoro={{ isActive: habit.pomodore, time: habit.pomodoreTime }}
+        />
 
         <Button
           disabled={habit.isDoneToday}
@@ -92,7 +106,14 @@ const HabitDetailsScreen: React.FC<
           <Text color={"white"}>Print habit</Text>
         </Button>
 
-        <DaysDetailList days={habit.days} />
+        <Block>
+          <DaysDetailList days={habit.days} />
+        </Block>
+
+        <Block marginTop={12} marginBottom={32} align="center">
+          <Text h4>Created By</Text>
+          <Text color={colors[mode].desc}>{habit.createdBy}</Text>
+        </Block>
       </Block>
     </Block>
   );

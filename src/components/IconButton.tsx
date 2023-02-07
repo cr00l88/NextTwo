@@ -9,9 +9,11 @@ import {
 import { SystemIcons, TSystemIconType } from "../assets/icons/icons";
 import { SvgXml } from "react-native-svg";
 import { ColorValue } from "react-native";
+import { useThemeStyles } from "../hooks/useThemeStyles";
 
 interface IIconButtonProps {
   icon: TSystemIconType;
+  border?: boolean;
   color?: ColorValue | string;
   backgroundColor?: string;
   hitSlop?: number;
@@ -23,8 +25,9 @@ interface IIconButtonProps {
 
 const IconButton: React.FC<IIconButtonProps> = ({
   icon,
-  color = "white",
-  backgroundColor = "navy",
+  border,
+  color = "black",
+  backgroundColor = "white",
   hitSlop,
   radius,
   padding,
@@ -32,7 +35,15 @@ const IconButton: React.FC<IIconButtonProps> = ({
   style,
   ...props
 }) => {
+  const { colors } = useThemeStyles();
+
   const buttonStyle = StyleSheet.flatten([
+    border !== undefined && {
+      borderWidth: 1,
+      borderColor: colors.lightGray,
+      borderRadius: 6,
+    },
+    backgroundColor !== undefined && { backgroundColor },
     radius !== undefined && { borderRadius: radius },
     padding !== undefined && { padding },
     style,

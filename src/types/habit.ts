@@ -1,5 +1,6 @@
 import { THabitIconType } from "../assets/icons/icons";
 import { IDay } from "./dayCell";
+import { TPomodoroTime } from "./pomodoro";
 
 export interface IHabit {
   id: string;
@@ -12,7 +13,7 @@ export interface IHabit {
   isDoneToday?: boolean;
 
   pomodore: boolean;
-  pomodoreTime: "15" | "30" | "60" | "120";
+  pomodoreTime: TPomodoroTime;
 
   notification: boolean;
 }
@@ -26,3 +27,5 @@ export type THabitRow = Pick<
   IHabit,
   "id" | "name" | "pomodore" | "desc" | "icon" | "days"
 >;
+
+export type THabitDetailNavbar = Pick<IHabit, "icon" | "name" | "desc">;

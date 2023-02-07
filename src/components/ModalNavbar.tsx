@@ -4,6 +4,7 @@ import { SystemIcons } from "../assets/icons/icons";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import { useThemeMode } from "../hooks/useThemeMode";
 import { Block, Button, Text } from "./index";
+import Separator from "./Separator";
 
 interface IModalNavbarProps {
   title?: string;
@@ -50,9 +51,7 @@ const ModalNavbar = ({
         </Button>
       </Block>
 
-      {showSeperator && (
-        <Block color={colors[mode].separator} style={{ height: 1 }} />
-      )}
+      <Separator ifShow={showSeperator} />
     </Block>
   );
 };

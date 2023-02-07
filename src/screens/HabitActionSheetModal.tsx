@@ -12,6 +12,8 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
+// TODO: Add pressable to buttons
+
 const HabitActionSheetModal: React.FC<
   RootStackScreenProps<"HabitActionSheetModal">
 > = ({ navigation, route }) => {
@@ -106,6 +108,18 @@ const HabitActionSheetModal: React.FC<
                 {habit.pomodore ? "Start pomodoro" : "Mark done"}
               </Text>
             )}
+          </Button>
+
+          <Button
+            center
+            border
+            marginVertical={sizes.s}
+            paddingVertical={sizes.s}
+            onPress={() => navigation.navigate("EditHabitScreen", { id })}
+          >
+            <Text body color={colors.black}>
+              Edit habit
+            </Text>
           </Button>
 
           <Button

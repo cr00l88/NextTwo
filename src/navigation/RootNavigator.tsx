@@ -16,6 +16,7 @@ import HabitActionSheetModal from "../screens/HabitActionSheetModal";
 import SelectHabitIconModal from "../screens/SelectHabitIconModal";
 import PomodoroScreen from "../screens/PomodoroScreen";
 import SelectLangScreen from "../screens/SelectLangScreen";
+import EditHabitScreen from "../screens/EditHabitScreen";
 
 import { msUntilMidnight } from "../utils/msUntilMidnight";
 
@@ -72,6 +73,11 @@ const RootNavigator = () => {
             name="CreateHabitScreen"
             component={CreateHabitScreen}
             options={{ title: "Create a new habit" }}
+          />
+          <RootStack.Screen
+            name="EditHabitScreen"
+            component={EditHabitScreen}
+            options={{ title: "Edit habit" }}
           />
           <RootStack.Screen
             name="SettingsScreen"

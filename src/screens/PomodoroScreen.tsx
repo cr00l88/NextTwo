@@ -35,17 +35,16 @@ const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
     }
   }, []);
 
+  const minToMs = (time: number): number => {
+    return Math.floor(time) * 60 * 1000;
+  };
+
   return (
-    <Block flex={1} color={colors.black}>
+    <Block flex={1} color={colors.black} padding={16}>
       <StatusBar barStyle="light-content" />
 
       <Block flex={1} safe paddingHorizontal={16}>
-        <Block
-          row
-          justify="space-between"
-          color="yellow
-        "
-        >
+        <Block row justify="space-between">
           <Text h4 color={colors.white} marginVertical={12}>
             Pomodoro
           </Text>
@@ -55,14 +54,14 @@ const PomodoroScreen: React.FC<RootStackScreenProps<"PomodoroScreen">> = ({
         </Block>
 
         {/* <ProgressArc cb={() => onMarkDoneToday(id)} /> */}
-        <ProgreesArcRef ref={arcRef} />
+        <ProgreesArcRef ref={arcRef} cb={() => onMarkDoneToday(id)} />
 
         <Block row>
           <Button
             margin={8}
             padding={8}
             color={"white"}
-            onPress={() => arcRef.current.start(3000)}
+            onPress={() => arcRef.current.start(minToMs(1))}
           >
             <Text>Start</Text>
           </Button>

@@ -19,10 +19,9 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
   navigation,
 }) => {
   const { onDeleteAllHabits } = useHabitsContext();
-  const [isNotify, setNotify] = useState<boolean>(false);
   const { colors, sizes } = useThemeStyles();
   const { mode, onChangeMode } = useThemeMode();
-
+  const [isNotify, setNotify] = useState<boolean>(false);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
   const progress = useDerivedValue(() => {
@@ -54,7 +53,7 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
       style={[
         {
           flex: 1,
-          backgroundColor: mode === "light" ? colors.light.bg : colors.dark.bg,
+          backgroundColor: colors[mode].bg,
         },
         rStyle,
       ]}
@@ -117,6 +116,7 @@ const SettingsScreen: React.FC<RootStackScreenProps<"SettingsScreen">> = ({
               setShowSnackbar(true);
             }}
             color={colors.error}
+            colorPressed="#E03E3E"
           >
             <Text color={colors.white}>Delete</Text>
           </Button>

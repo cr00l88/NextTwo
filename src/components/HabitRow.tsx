@@ -14,6 +14,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import HabitIcon from "./HabitIcon";
 
 interface IHabitRowProps {
   habit: THabitRow;
@@ -71,18 +72,7 @@ const HabitRow = ({
             marginVertical={4}
           >
             <Block row align="center" marginBottom={10}>
-              {habit.icon !== "none" && (
-                <Block
-                  justify="center"
-                  align="center"
-                  color={"#F3F3F3"}
-                  marginRight={sizes.s}
-                  padding={sizes.s}
-                  style={{ borderRadius: 4 }}
-                >
-                  <Icon icon={habit.icon} color="black" />
-                </Block>
-              )}
+              {habit.icon !== "none" && <HabitIcon icon={habit.icon} />}
               <Block>
                 <Text h4 color={colors[mode].text}>
                   {habit.name}

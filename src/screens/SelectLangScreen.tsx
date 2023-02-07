@@ -11,7 +11,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import ModalNavbar from "../components/ModalNavbar";
-import { ILang, LANG_LIST } from "../assets/lang/lang";
+import { ILang, LANG_LIST } from "../assets/lang/langList";
 
 const SelectLangScreen: React.FC<RootStackScreenProps<"SelectLangScreen">> = ({
   navigation,

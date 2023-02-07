@@ -37,7 +37,6 @@ const initialState: IHabitsContextState = {
   getAllHabits: () => {},
   getHabit: () => {},
   onCreateHabit: () => {},
-
   onMarkDoneToday: () => {},
   onDeleteHabit: () => {},
   onDeleteAllHabits: () => {},
@@ -84,10 +83,6 @@ const HabitsProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const randomId = generateId();
     const days = generateTwoNextMonthInDays();
     const today = getTodayDate("SlashString") as string;
-
-    //mocked days
-    // const days = generateMockTwoNextMonthInDays();
-    // console.log(days);
 
     const newHabit: IHabit = {
       id: randomId,

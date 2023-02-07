@@ -15,6 +15,9 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import HomeEmptyState from "../components/HomeEmptyState";
+import Separator from "../components/Separator";
+
+// TODO: Fix bottom of flatList
 
 const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   navigation,
@@ -57,14 +60,7 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
         onPressSettings={() => navigation.navigate("SettingsScreen")}
         onPressCreate={() => navigation.navigate("CreateHabitScreen")}
       />
-      {mode === "light" && (
-        <Animated.View style={rSeparatorOpacityStyle}>
-          <Block
-            color={colors.lightGray}
-            style={{ height: 1, width: "100%" }}
-          />
-        </Animated.View>
-      )}
+      {mode === "light" && <Separator ifShow={showSeparator} />}
 
       <Block flex={1}>
         <FlatList

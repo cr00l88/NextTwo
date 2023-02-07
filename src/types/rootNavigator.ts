@@ -9,6 +9,7 @@ export type RootNavigatorParamsList = {
   HabitActionSheetModal: { id: string };
   SelectHabitIconModal: { id: string };
   PomodoroScreen: { id: string };
+  EditHabitScreen: { id: string };
 };
 
 export type RootStackScreenProps<T extends keyof RootNavigatorParamsList> =
