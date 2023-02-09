@@ -28,7 +28,7 @@ const DoneTodayCounterCircle = ({
           height: CIRCLE_SIZE,
         }}
       >
-        <SuccessCircle size={CIRCLE_SIZE} />
+        <SuccessCircle size={CIRCLE_SIZE} ifAnimation={false} />
       </Block>
     );
   } else {

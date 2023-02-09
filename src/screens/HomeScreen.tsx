@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FlatList } from "react-native";
 import { RootStackScreenProps } from "../types/rootNavigator";
-import { Block } from "../components";
+import { Block, Text } from "../components";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useThemeMode } from "../hooks/useThemeMode";
 import { useThemeStyles } from "../hooks/useThemeStyles";
@@ -12,6 +12,7 @@ import TodaySummaryBanner from "../components/TodaySummaryBanner";
 import HomeEmptyState from "../components/HomeEmptyState";
 import Separator from "../components/Separator";
 import Filters from "../components/Filters";
+import EmptyFilterInformation from "../components/EmptyFilterInformation";
 
 // TODO: Fix bottom of flatList
 
@@ -26,10 +27,25 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   const [showSeparator, setShowSeparator] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<TFilter>("All");
 
+  const todo = useMemo(
+    () => habits.filter((habit) => !habit.isDoneToday),
+    [habits]
+  );
+
+  const done = useMemo(
+    () => habits.filter((habit) => habit.isDoneToday),
+    [habits]
+  );
+
   const FILTER_CONDITION = {
     All: habits,
-    ToDo: habits.filter((habit) => habit.isDoneToday === false),
-    Done: habits.filter((habit) => habit.isDoneToday),
+    ToDo: todo,
+    Done: done,
+  };
+
+  const onNavigateToDetailes = (id: string) => {
+    getHabit(id);
+    navigation.navigate("HabitDetailsScreen", { id });
   };
 
   const renderItem = ({ item }) => (
@@ -43,11 +59,6 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
       }}
     />
   );
-
-  const onNavigateToDetailes = (id: string) => {
-    getHabit(id);
-    navigation.navigate("HabitDetailsScreen", { id });
-  };
 
   return (
     <Block safe flex={1} color={colors[mode].bg}>
@@ -68,11 +79,15 @@ const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
             paddingHorizontal: 12,
             paddingBottom: 64,
           }}
-          ListEmptyComponent={() => (
-            <HomeEmptyState
-              onPress={() => navigation.navigate("CreateHabitScreen")}
-            />
-          )}
+          ListEmptyComponent={() =>
+            habits.length > 0 ? (
+              <EmptyFilterInformation emptyFilterName={selectedFilter} />
+            ) : (
+              <HomeEmptyState
+                onPress={() => navigation.navigate("CreateHabitScreen")}
+              />
+            )
+          }
           ListHeaderComponent={() =>
             habits.length > 0 && (
               <Block>

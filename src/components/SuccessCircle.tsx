@@ -13,9 +13,10 @@ const SUCCESS_MARK_PATH = "M 15 27 L 23 35 L 39 19";
 
 interface ISuccessCircleProps {
   size: number;
+  ifAnimation: boolean;
 }
 
-const SuccessCircle = ({ size }: ISuccessCircleProps) => {
+const SuccessCircle = ({ size, ifAnimation }: ISuccessCircleProps) => {
   const { colors } = useThemeStyles();
 
   const endPosition = useValue(0.0);
@@ -27,31 +28,52 @@ const SuccessCircle = ({ size }: ISuccessCircleProps) => {
     });
   }, []);
 
-  return (
-    <Canvas
-      style={{
-        width: size,
-        height: size,
-        borderRadius: size / 2,
-        backgroundColor: colors.white,
-      }}
-    >
-      <Circle
-        r={size / 2}
-        cx={size / 2}
-        cy={size / 2}
-        color={colors.white}
-        opacity={opacity}
-      />
-      <Path
-        path={SUCCESS_MARK_PATH}
-        color={colors.black}
-        style="stroke"
-        strokeWidth={4}
-        end={endPosition}
-      />
-    </Canvas>
-  );
+  if (ifAnimation) {
+    return (
+      <Canvas
+        style={{
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          backgroundColor: colors.white,
+        }}
+      >
+        <Circle
+          r={size / 2}
+          cx={size / 2}
+          cy={size / 2}
+          color={colors.white}
+          opacity={opacity}
+        />
+        <Path
+          path={SUCCESS_MARK_PATH}
+          color={colors.black}
+          style="stroke"
+          strokeWidth={4}
+          end={endPosition}
+        />
+      </Canvas>
+    );
+  } else {
+    return (
+      <Canvas
+        style={{
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          backgroundColor: colors.white,
+        }}
+      >
+        <Circle r={size / 2} cx={size / 2} cy={size / 2} color={colors.white} />
+        <Path
+          path={SUCCESS_MARK_PATH}
+          color={colors.black}
+          style="stroke"
+          strokeWidth={4}
+        />
+      </Canvas>
+    );
+  }
 };
 
 export default memo(SuccessCircle);

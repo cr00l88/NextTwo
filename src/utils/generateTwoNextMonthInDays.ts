@@ -4,12 +4,8 @@ import { IDay } from "../types/dayCell";
 export const generateTwoNextMonthInDays = (): IDay[] => {
   const today = new Date();
   const tDay = today.getDate();
-  const tMonth = today.toLocaleString("en-US", {
-    month: "numeric",
-  });
-  const tYear = today.toLocaleString("default", {
-    year: "numeric",
-  });
+  const tMonth = today.getMonth() + 1;
+  const tYear = today.getFullYear();
   const startDate = `${tYear}/${tMonth}/${tDay}`;
 
   let days: IDay[] = [];

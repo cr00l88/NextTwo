@@ -28,7 +28,7 @@ const HabitDetailsNavbar = ({
       paddingHorizontal={16}
       style={{ height: 64 }}
     >
-      <Block row>
+      <Block row align="center">
         {icon !== "none" && <HabitIcon icon={icon} />}
         <Block>
           <Text h4>{name}</Text>
@@ -52,7 +52,7 @@ const HabitDetailsNavbar = ({
           icon="xMark"
           padding={4}
           color={colors.black}
-          backgroundColor={colors.lightGray}
+          backgroundColor={"#F2F0F0"}
           onPress={onPressClose}
         />
       </Block>

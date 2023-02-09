@@ -107,7 +107,6 @@ const HabitRow = ({
             />
           </Block>
 
-          {/* More option button */}
           <IconButton
             icon="more"
             hitSlop={16}
@@ -120,7 +119,6 @@ const HabitRow = ({
               width: 22,
               height: 22,
               borderRadius: 4,
-              // backgroundColor: "white",
             }}
           />
         </Animated.View>

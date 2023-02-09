@@ -4,9 +4,9 @@ export const getTodayDate = (format: TFormatDate) => {
   const today = new Date();
 
   const todayDate = {
-    day: today.toLocaleString("en-US", { day: "2-digit" }),
-    month: today.toLocaleString("en-US", { month: "numeric" }),
-    year: today.toLocaleString("en-US", { year: "numeric" }),
+    day: today.getDate(),
+    month: today.getMonth() + 1,
+    year: today.getFullYear(),
   };
 
   if (format === "SlashString") {

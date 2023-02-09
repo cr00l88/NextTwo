@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo } from "react";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 import { Block, Text } from "./index";
 import { MONTH_SHORT } from "../utils/monthsShort";
@@ -82,4 +82,4 @@ const TodaySummaryBanner = ({ habitsNum }: ITodaySummaryBannerProps) => {
   );
 };
 
-export default TodaySummaryBanner;
+export default memo(TodaySummaryBanner);

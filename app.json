@@ -15,7 +15,7 @@
       "backgroundColor": "#090909"
     },
     "ios": {
-      "bundleIdentifier": "com.anonymous.nexttwo"
+      "bundleIdentifier": "com.linskycomp.nexttwo"
     },
     "android": {
       "package": "com.nexttwo.nexttwo",

@@ -11,6 +11,8 @@ import { SvgXml } from "react-native-svg";
 import { ColorValue } from "react-native";
 import { useThemeStyles } from "../hooks/useThemeStyles";
 
+// TODO: Change to Pressable + add pressedColor
+
 interface IIconButtonProps {
   icon: TSystemIconType;
   border?: boolean;
@@ -27,7 +29,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
   icon,
   border,
   color = "black",
-  backgroundColor = "white",
+  backgroundColor = "transparent",
   hitSlop,
   radius,
   padding,

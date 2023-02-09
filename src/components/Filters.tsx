@@ -12,8 +12,8 @@ export interface IFiltersProps {
 const Filters = ({ selected, filters, onSelect }: IFiltersProps) => {
   const { colors } = useThemeStyles();
 
-  const filterCell = (filter: TFilter) => (
-    <Button onPress={() => onSelect(filter)}>
+  const filterCell = (filter: TFilter, id: number) => (
+    <Button key={id.toString()} onPress={() => onSelect(filter)}>
       <Block
         radius={6}
         marginHorizontal={2}
@@ -40,7 +40,7 @@ const Filters = ({ selected, filters, onSelect }: IFiltersProps) => {
         Sort by:
       </Text>
 
-      <Block row>{filters.map((filter, i) => filterCell(filter))}</Block>
+      <Block row>{filters.map((filter, i) => filterCell(filter, i))}</Block>
     </Block>
   );
 };
